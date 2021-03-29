@@ -14,14 +14,6 @@ output:
 
 Last updated `r lubridate::today()`
 
-# Mountain Cryosphere
-
--   Snow
-
--   Glaciers
-
--   Lake and River Ice
-
 # Watershed Disturbance
 
 -   Stand Replacing
@@ -37,3 +29,13 @@ Last updated `r lubridate::today()`
 -   Floods
 
 -   Avalanches
+
+# Mountain Cryosphere
+
+-   Snow
+
+-   Glaciers
+
+-   Permafrost
+
+-   Lake and River Ice
