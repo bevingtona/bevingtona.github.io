@@ -5,9 +5,9 @@ pagetitle: "Alexandre R. Bevington"
 
 <link rel="stylesheet" href="styles.css" type="text/css"> <link rel="stylesheet" href="academicicons/css/academicons.min.css"/>
 
-These days I wear a few hats:
+![](images/2019-02-12_0029.jpg)
 
--   Family / Father
+These days I wear a few hats:
 
 -   Research hydrologist with the [Government of British Columbia](https://www2.gov.bc.ca/gov/content/environment/research-monitoring-reporting/research/flnrord-research-authors/alexandre-bevington).
 
@@ -15,7 +15,7 @@ These days I wear a few hats:
 
 -   President of the [Prince George Backcountry Recreation Society](www.pgbrs.org)
 
-This website serves as a CV and as somewhere I can share progress and thoughts on:
+This website serves as a general purpose CV and is somewhere that I can share progress and thoughts on:
 
 -   Earth Observation
 
