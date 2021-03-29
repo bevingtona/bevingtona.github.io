@@ -2,6 +2,4 @@
 .Rhistory
 .RData
 .Ruserdata
-rmarkdown-website-template.Rproj
-README.html
-site_libs
+.httr-oauth

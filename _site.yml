@@ -1,0 +1,55 @@
+name: "Alexandre R. Bevington"
+output_dir: "."
+navbar:
+  title: "Alexandre R. Bevington"
+  left:
+    - text: "CV"
+      href: cv.html
+    - text: "Current Research"
+      href: research.html
+    # - text: "Backcountry"
+    #   href: research.html
+    - text: Code Blog
+      menu:
+      - text: "R Spatial (coming soon)"
+        href: 
+      - text: "R Parallel (coming soon)"
+        href: 
+      - text: "R Rivers (coming soon)"
+        href: 
+      - text: "R Bathymetry (coming soon)"
+        href: 
+      - text: "R SQLite (coming soon)"
+        href: 
+      # - text: "SubMenu"
+      #   menu:
+      #   - text: "Item1"
+      #   href: index2.html 
+      #   - text: "Item2"
+      #     href: https://getbootstrap.com/docs/4.4/components/alerts/
+
+    # - text: "EO"
+    #   href: research.html
+    # - text: "Hydro"
+    #   href: research.html
+    # - text: "Cryo"
+    #   href: research.html
+  right:
+    # - icon: fa-envelope fa-lg
+    #   href: contact.html
+    # - icon: ai-google-scholar ai-lg
+    #   href: https://scholar.google.com/citations?user=5SVDaREAAAAJ&hl=en
+    # - icon: ai-cv ai-lg
+      # href: ./files/Zabor_Emily_CV.pdf
+    - text: github
+    # - icon: fa-github fa-lg
+      href: https://github.com/bevingtona
+    # - icon: fa-twitter fa-lg
+    - text: twitter
+      href: https://twitter.com/abevingtona
+    - text: linked-in
+      href: https://www.linkedin.com/in/bevingtona/
+output:
+  html_document:
+    theme: paper
+    css: 'styles.css'

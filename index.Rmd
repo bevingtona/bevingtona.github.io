@@ -1,0 +1,28 @@
+---
+title: " "
+pagetitle: "Alexandre R. Bevington"
+---
+
+<link rel="stylesheet" href="styles.css" type="text/css"> <link rel="stylesheet" href="academicicons/css/academicons.min.css"/>
+
+These days I wear a few hats:
+
+-   Family / Father
+
+-   Research hydrologist with the [Government of British Columbia](https://www2.gov.bc.ca/gov/content/environment/research-monitoring-reporting/research/flnrord-research-authors/alexandre-bevington).
+
+-   PhD student at the [University of Northern British Columbia](www.unbc.ca)
+
+-   President of the [Prince George Backcountry Recreation Society](www.pgbrs.org)
+
+This website serves as a CV and as somewhere I can share progress and thoughts on:
+
+-   Earth Observation
+
+-   Hydrology
+
+-   Cryosphere
+
+-   Cartography
+
+-   Coding
