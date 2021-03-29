@@ -14,9 +14,26 @@ output:
 
 Last updated `r lubridate::today()`
 
+# Mountain Cryosphere
 
-# Mountain Cryosphere 
-# Watershed Disturbance 
-# Remote Sensing 
+-   Snow
+
+-   Glaciers
+
+-   Lake and River Ice
+
+# Watershed Disturbance
+
+-   Stand Replacing
+
+-   Non-Stand Replacing
+
+-   Watershed Sensitivity
+
 # Hydro- and Geo-hazards
 
+-   Landslides
+
+-   Floods
+
+-   Avalanches

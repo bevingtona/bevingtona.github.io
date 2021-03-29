@@ -41,13 +41,13 @@ navbar:
     #   href: https://scholar.google.com/citations?user=5SVDaREAAAAJ&hl=en
     # - icon: ai-cv ai-lg
       # href: ./files/Zabor_Emily_CV.pdf
-    - text: github
-    # - icon: fa-github fa-lg
+    - text: RG
+      href: https://www.researchgate.net/profile/Alexandre-Bevington
+    - text: GitHub
       href: https://github.com/bevingtona
-    # - icon: fa-twitter fa-lg
-    - text: twitter
+    - text: Twitter
       href: https://twitter.com/abevingtona
-    - text: linked-in
+    - text: Linked-In
       href: https://www.linkedin.com/in/bevingtona/
 output:
   html_document:
