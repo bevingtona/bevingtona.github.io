@@ -16,26 +16,28 @@ Last updated `r lubridate::today()`
 
 # Watershed Disturbance
 
--   Stand Replacing
+<!-- -   Stand Replacing -->
 
--   Non-Stand Replacing
+<!-- -   Non-Stand Replacing -->
 
--   Watershed Sensitivity
-
-# Hydro- and Geo-hazards
-
--   Landslides
-
--   Floods
-
--   Avalanches
+<!-- -   Watershed Sensitivity -->
 
 # Mountain Cryosphere
 
--   Snow
+<!-- -   Snow -->
 
--   Glaciers
+<!-- -   Glaciers -->
 
--   Permafrost
+<!-- -   Permafrost -->
 
--   Lake and River Ice
+<!-- -   Lake and River Ice -->
+
+# Geohazards
+
+<!-- -   Landslides -->
+
+<!-- -   Floods -->
+
+<!-- -   Avalanches -->
+
+# Remote Sensing

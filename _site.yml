@@ -13,16 +13,8 @@ navbar:
       menu:
       - text: "Using the `stars` package"
         href: 20210329_stars.html  
-      - text: "R Spatial (coming soon)"
-        href: 
-      - text: "R Parallel (coming soon)"
-        href: 
-      - text: "R Rivers (coming soon)"
-        href: 
-      - text: "R Bathymetry (coming soon)"
-        href: 
-      - text: "R SQLite (coming soon)"
-        href: 
+      - text: "3D timelapse from Landsat"
+        href: 20210504_rgee_rayshade_gifski.html
 
       # - text: "SubMenu"
       #   menu:

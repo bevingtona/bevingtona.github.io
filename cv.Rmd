@@ -24,21 +24,21 @@ Last updated `r lubridate::today()`
     Ministry of Forests, Lands, Natural Resource Operations and Rural Development\
     Prince George, British Columbia
 
--   **College Instructor**, 2013-2014\
-    Yukon College\
-    Whitehorse, Yukon
+<!-- -   **College Instructor**, 2013-2014\ -->
+<!--     Yukon College\ -->
+<!--     Whitehorse, Yukon -->
 
--   **Graduate Field Researcher in Permafrost Science**, 2010-2014\
-    University of Ottawa / Geological Survey of Canada\
-    Ottawa, Ontario and Whitehorse, Yukon
+<!-- -   **Graduate Field Researcher in Permafrost Science**, 2010-2014\ -->
+<!--     University of Ottawa / Geological Survey of Canada\ -->
+<!--     Ottawa, Ontario and Whitehorse, Yukon -->
 
--   **Teaching Assistant**, 2012-2013\
-    University of Ottawa\
-    Ottawa, Ontario
+<!-- -   **Teaching Assistant**, 2012-2013\ -->
+<!--     University of Ottawa\ -->
+<!--     Ottawa, Ontario -->
 
--   **Editorial Assistant**, 2012-2012\
-    Canadian International Polar Year, Aboriginal Affairs and Northern Development Canada\
-    Ottawa, Ontario
+<!-- -   **Editorial Assistant**, 2012-2012\ -->
+<!--     Canadian International Polar Year, Aboriginal Affairs and Northern Development Canada\ -->
+<!--     Ottawa, Ontario -->
 
 # Education
 
@@ -52,10 +52,10 @@ Last updated `r lubridate::today()`
     "Towards a TTOP-model of permafrost distribution for Yukon and British Columbia"\
     Supervisor: Dr. A. Lewkowicz
 
--   **BSc with Honors in Physical Geography**, 2011\
-    University of Ottawa (Ottawa, Canada)\
-    "Characteristics of the last five surges of Lowell Glacier, Yukon, Canada, since 1948"\
-    Supervisor: Dr. L. Copland
+<!-- -   **BSc with Honors in Physical Geography**, 2011\ -->
+<!--     University of Ottawa (Ottawa, Canada)\ -->
+<!--     "Characteristics of the last five surges of Lowell Glacier, Yukon, Canada, since 1948"\ -->
+<!--     Supervisor: Dr. L. Copland -->
 
 # Publications
 
@@ -181,68 +181,68 @@ Last updated `r lubridate::today()`
 
 14. **Bevington AR**, M van Der Kooij, M Geertsema, C Huggel. 2015. Detection and analysis of landslides following the April 25, 2015 Mw 7.8 Gorkha earthquake, Nepal using Radarsat-2 SAR data. Oral Presentation, Canadian Space Agency ASAR Workshop, Montreal, Quebec.
 
-# Awards
+<!-- # Awards -->
 
-1.  British Columbia Institute of Agrology, New Growth Award, 2020
+<!-- 1.  British Columbia Institute of Agrology, New Growth Award, 2020 -->
 
-2.  NSERC Canada Graduate Scholarship -- Doctoral (CGS-D), 2018-2020
+<!-- 2.  NSERC Canada Graduate Scholarship -- Doctoral (CGS-D), 2018-2020 -->
 
-3.  University of Northern British Columbia Graduate Travel Award, 2017
+<!-- 3.  University of Northern British Columbia Graduate Travel Award, 2017 -->
 
-4.  University of Northern British Columbia Doctoral Tuition Fee Waiver, 2016-2020
+<!-- 4.  University of Northern British Columbia Doctoral Tuition Fee Waiver, 2016-2020 -->
 
-5.  GLACIO-EX: Norwegian Cryospheric Exchange Scholarship, University of Oslo, 2014
+<!-- 5.  GLACIO-EX: Norwegian Cryospheric Exchange Scholarship, University of Oslo, 2014 -->
 
-6.  National Geographic Young Explorer Grant, 2013
+<!-- 6.  National Geographic Young Explorer Grant, 2013 -->
 
-7.  W. Garfield Weston Award for Northern Research (Master's) / Association of Canadian Universities for Northern Studies, 2013
+<!-- 7.  W. Garfield Weston Award for Northern Research (Master's) / Association of Canadian Universities for Northern Studies, 2013 -->
 
-8.  Northern Scientific Training Program from Aboriginal Affairs and Northern Development Canada, 2011-2013
+<!-- 8.  Northern Scientific Training Program from Aboriginal Affairs and Northern Development Canada, 2011-2013 -->
 
-9.  Research Fellowship, Northern Research Endowment Fund, Yukon Research Centre, Yukon College, 2013
+<!-- 9.  Research Fellowship, Northern Research Endowment Fund, Yukon Research Centre, Yukon College, 2013 -->
 
-10. High North Fellowship Program, Norwegian Government, 2013
+<!-- 10. High North Fellowship Program, Norwegian Government, 2013 -->
 
-11. Graduate Student Admission Scholarship, M.Sc. in Physical Geography, 2012-2014
+<!-- 11. Graduate Student Admission Scholarship, M.Sc. in Physical Geography, 2012-2014 -->
 
-12. NSERC CREATE Training Program Undergraduate Poster Award, 2012
+<!-- 12. NSERC CREATE Training Program Undergraduate Poster Award, 2012 -->
 
-13. NSERC USRA National Science and Engineering Research Council Undergraduate Student Research Award, 2011
+<!-- 13. NSERC USRA National Science and Engineering Research Council Undergraduate Student Research Award, 2011 -->
 
-14. CRYO-EX: Norwegian Cryospheric Exchange Scholarship, University of Oslo, 2010
+<!-- 14. CRYO-EX: Norwegian Cryospheric Exchange Scholarship, University of Oslo, 2010 -->
 
-# Volunteering
+<!-- # Volunteering -->
 
-1.  **President**, [Prince George Backcountry Recreation Society](www.pgbrs.org), 2020-Present
+<!-- 1.  **President**, [Prince George Backcountry Recreation Society](www.pgbrs.org), 2020-Present -->
 
-2.  **Conference Organizer**, Canadian Cartographic Association, 2019
+<!-- 2.  **Conference Organizer**, Canadian Cartographic Association, 2019 -->
 
-3.  **Young National Correspondent**,GTN-P Canada, 2015-18
+<!-- 3.  **Young National Correspondent**,GTN-P Canada, 2015-18 -->
 
-4.  **Mountain permafrost workshop coordinator**, Carleton University, 2014
+<!-- 4.  **Mountain permafrost workshop coordinator**, Carleton University, 2014 -->
 
-5.  **Vice-President**, Permafrost Young Researcher Network, 2014-16
+<!-- 5.  **Vice-President**, Permafrost Young Researcher Network, 2014-16 -->
 
-6.  **Volunteer Reviewer**, 4th European Conference on Permafrost (EUCOP4), 2014
+<!-- 6.  **Volunteer Reviewer**, 4th European Conference on Permafrost (EUCOP4), 2014 -->
 
-7.  **Ski Patroller**, Canadian Ski Patrol, Yukon, 2013-14
+<!-- 7.  **Ski Patroller**, Canadian Ski Patrol, Yukon, 2013-14 -->
 
-8.  **Board Member**, Association of Polar Early Career Scientists (APECS) Canada, 2013-15
+<!-- 8.  **Board Member**, Association of Polar Early Career Scientists (APECS) Canada, 2013-15 -->
 
-9.  **GIS Analyst**, Mining Watch Canada, 2013
+<!-- 9.  **GIS Analyst**, Mining Watch Canada, 2013 -->
 
-10. **GIS Analyst**, GIS Corps, 2012-13
+<!-- 10. **GIS Analyst**, GIS Corps, 2012-13 -->
 
-11. **Vice President Social**, Geography Graduate Student Association, University of Ottawa, 2012-13
+<!-- 11. **Vice President Social**, Geography Graduate Student Association, University of Ottawa, 2012-13 -->
 
-12. **Lead Organizer**, University of Ottawa GIS Day 2012, 2012
+<!-- 12. **Lead Organizer**, University of Ottawa GIS Day 2012, 2012 -->
 
-13. **Youth Outreach**, NSERC Let's Talk Science, 2012-13
+<!-- 13. **Youth Outreach**, NSERC Let's Talk Science, 2012-13 -->
 
-14. **Scientific Abstract Review Board Member**, ACUNS Student Conference, 2012
+<!-- 14. **Scientific Abstract Review Board Member**, ACUNS Student Conference, 2012 -->
 
-15. **Member of the Executive Council**, Association of Polar Early Career Scientists (APECS), 2011-12
+<!-- 15. **Member of the Executive Council**, Association of Polar Early Career Scientists (APECS), 2011-12 -->
 
-16. **Student Senator**, Faculty of Science, University of Ottawa, 2009-10
+<!-- 16. **Student Senator**, Faculty of Science, University of Ottawa, 2009-10 -->
 
-17. **President**, Undergraduate Geography Student Association, University of Ottawa, 2007-09
+<!-- 17. **President**, Undergraduate Geography Student Association, University of Ottawa, 2007-09 -->
