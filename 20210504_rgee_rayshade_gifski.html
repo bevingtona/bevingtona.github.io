@@ -375,14 +375,12 @@ div.tocify {
 
 <p><link rel="stylesheet" href="styles.css" type="text/css"><br />
 <link rel="stylesheet" href="academicicons/css/academicons.min.css"/></p>
-<p>Last updated 2021-05-05</p>
+<p>Last updated 2021-05-05 22:19:39</p>
 <p>The purpose of this page is to demonstrate how to make a 3D timelapse animation from Landsat imagery.</p>
 <p><img src="images/animation-01.gif" width="282" /></p>
 <div id="setup-your-project" class="section level1" number="1">
 <h1 number="1"><span class="header-section-number">1</span> Setup your project</h1>
-<div id="load-libraries" class="section level2" number="1.1">
-<h2 number="1.1"><span class="header-section-number">1.1</span> Load libraries</h2>
-<p>First load the follwoing libraries:</p>
+<p>First load the following libraries:</p>
 <pre class="r"><code># LANDSAT MOSAICS 
 library(mapedit)
 library(rgee)
@@ -392,7 +390,7 @@ library(sf)
 library(stars)
 library(forecast)
 
-# RAYSAHDER 
+# RAYSHADER 
 library(raster)
 library(rayshader)
 
@@ -402,28 +400,20 @@ library(gifski)
 # PARALLEL 
 library(future)
 library(future.apply)</code></pre>
-</div>
-<div id="initialize-gee" class="section level2" number="1.2">
-<h2 number="1.2"><span class="header-section-number">1.2</span> Initialize GEE</h2>
 <p>Then connect to GEE, more info on connecting your Earth Engine credentials can be found here: <a href="https://r-spatial.github.io/rgee/reference/ee_Initialize.html" class="uri">https://r-spatial.github.io/rgee/reference/ee_Initialize.html</a>.</p>
-<pre class="r"><code>rgee::ee_Initialize(email = &quot;bevingtona&quot;, drive = T)</code></pre>
-</div>
-<div id="area-of-interest" class="section level2" number="1.3">
-<h2 number="1.3"><span class="header-section-number">1.3</span> Area of interest</h2>
-<p>Define your area of interest as an <code>sf</code> polygon. In the commented code below, I use the <code>mapedit</code> package to digitize an <code>aoi</code>, then I save it locally to reproduct the workflow. The polygon is then loaded to Earth Engine.</p>
-<p><em>Tip: Keep the polygon simple, ideally just a rectangle.</em> <em>Tip: The larger the polygon, the slower the workflow, start small!</em></p>
-<pre class="r"><code>project_name &lt;- &quot;klini_lg&quot; #unique name for the project
-# aoi &lt;- mapedit::editMap()
-# write_sf(aoi, paste0(project_name,&quot;.gpkg&quot;))
-aoi &lt;- read_sf(paste0(project_name,&quot;.gpkg&quot;))
-aoi_ee &lt;- rgee::sf_as_ee(aoi)$geometry()
-Map$centerObject(aoi_ee)
-Map$addLayer(aoi_ee)</code></pre>
-</div>
-<div id="set-project-settings" class="section level2" number="1.4">
-<h2 number="1.4"><span class="header-section-number">1.4</span> Set project settings</h2>
+<pre class="r"><code>rgee::ee_Initialize(email = &quot;&quot;, drive = T)</code></pre>
+<p>Define your area of interest as an <code>sf</code> polygon. In the commented code below, I use the <code>mapedit</code> package to digitize an <code>aoi</code>, then I save it locally to reproduce the workflow later on. The polygon is then loaded to Earth Engine. There are many ways to do this step.</p>
+<p><em>Pro tip #1: Keep the polygon simple, ideally just a rectangle.</em> <em>Pro tip #2: The larger the polygon, the slower the workflow, start small!</em></p>
+<pre class="r"><code># aoi &lt;- mapedit::editMap() #create AOI
+project_name &lt;- &quot;klini_lg&quot; #unique name for the project
+# write_sf(aoi, paste0(project_name,&quot;.gpkg&quot;)) #write aoi locally
+aoi &lt;- read_sf(paste0(project_name,&quot;.gpkg&quot;)) #read from local
+aoi_ee &lt;- rgee::sf_as_ee(aoi)$geometry() # convert aoi to earth engine object
+Map$centerObject(aoi_ee) #centre map to aoi
+Map$addLayer(aoi_ee) #plot aoi from earth engine</code></pre>
 <p>Here we set up the project with key variables for the rest of the script. Most are intuitive, but I’ve added some comments to help explain.</p>
-<pre class="r"><code>cloud &lt;- 10 # Landsat metadata cloud cover threshold 
+<pre class="r"><code>resolution &lt;- 60 # Imagery and DEM resolution in m
+cloud &lt;- 10 # Landsat metadata cloud cover threshold 
 monthStart &lt;- 7 # filter months included in mosaics. 
 monthEnd &lt;- 9 # filter months included in mosaics.
 yearStart &lt;- 1985 # filter year included in mosaics.
@@ -434,8 +424,9 @@ years &lt;- seq(yearStart, yearEnd, yearInterval)
 cloudBuffer &lt;- 3000 # cloud buffer distance in m
 gdrive &lt;- &quot;E:/Google Drive/&quot; # location of google drive locally for files to sync
 
-outfolder_name &lt;- paste(
+outfolder_name &lt;- paste( #this is the folder where ALL data will be stored
   project_name,
+  resolution, 
   cloud,
   monthStart,
   monthEnd,
@@ -447,13 +438,11 @@ outfolder_name &lt;- paste(
   sep = &quot;_&quot;
 )</code></pre>
 </div>
-</div>
 <div id="rgee" class="section level1" number="2">
 <h1 number="2"><span class="header-section-number">2</span> RGEE</h1>
-<p>The goal of using Google Earth Engine is to quickly make annual cloud-free mosaics and clip them to our area of interest.</p>
-<p><em>Tip: the script assumes that you use "Backup and Sync to automatically sync your Google Drive to your desktop</em></p>
-<div id="landsat-functions" class="section level2" number="2.1">
-<h2 number="2.1"><span class="header-section-number">2.1</span> Landsat functions</h2>
+<p>The goal of using <code>Google Earth Engine</code> is to quickly make annual cloud-free mosaics and clip them to our area of interest. The script assumes that you use “Backup and Sync” from Google to automatically sync your Google Drive to your desktop. There are many ways to do this step, this is just one way!</p>
+<div id="landsat-pre-processing-functions-optional" class="section level2" number="2.1">
+<h2 number="2.1"><span class="header-section-number">2.1</span> Landsat pre-processing functions (optional)</h2>
 <pre class="r"><code># Function to scale Surface Reflectance values
 srScale = function(img) {
   img$addBands(img$select(c(
@@ -480,14 +469,14 @@ radiometric = function(img) {
 cloudMask = function(img) {
   temp  = img$addBands(img$select(&#39;tir&#39;)$unitScale(240, 270))
   temp  = temp$addBands(temp$normalizedDifference(c(&#39;tir_1&#39;, &#39;swir2&#39;))$rename(&#39;ndci&#39;))
-  temp  = temp$addBands(temp$select(&#39;ndci&#39;)$lte(0.5)$rename(&#39;ndciT&#39;))
+  temp  = temp$addBands(temp$select(&#39;ndci&#39;)$lte(0.4)$rename(&#39;ndciT&#39;))
   mask  = temp$select(&#39;ndciT&#39;)$fastDistanceTransform(51, &#39;pixels&#39;, &#39;squared_euclidean&#39;)$
     sqrt()$multiply(ee$Image$pixelArea()$sqrt())$gt(cloudBuffer)
   img$updateMask(mask)
 }</code></pre>
 </div>
-<div id="landsat-collections" class="section level2" number="2.2">
-<h2 number="2.2"><span class="header-section-number">2.2</span> Landsat collections</h2>
+<div id="landsat-sr-collections" class="section level2" number="2.2">
+<h2 number="2.2"><span class="header-section-number">2.2</span> Landsat SR collections</h2>
 <pre class="r"><code># Load collections
 L4SR1 &lt;- ee$ImageCollection(&#39;LANDSAT/LT04/C01/T1_SR&#39;)
 L5SR1 &lt;- ee$ImageCollection(&#39;LANDSAT/LT05/C01/T1_SR&#39;)
@@ -520,27 +509,32 @@ col = L4SR1$select(LT_BANDS, ST_NAMES)$merge(
 vizParams &lt;-
   list(bands = c(&quot;swir1&quot;, &quot;nir&quot;, &quot;red&quot;),
        min = 0,
-       max = 0.4)
-
-# Check image
-col$mean() %&gt;% Map$addLayer(visParams = vizParams)</code></pre>
+       max = 0.4)</code></pre>
 </div>
-<div id="download-annual-mosaics" class="section level2" number="2.3">
-<h2 number="2.3"><span class="header-section-number">2.3</span> Download annual mosaics</h2>
-<pre class="r"><code>out &lt;- lapply(seq(yearStart, yearEnd, yearInterval), function(year) {
-print(year)
+<div id="download-8-bit-rgb-annual-mosaics" class="section level2" number="2.3">
+<h2 number="2.3"><span class="header-section-number">2.3</span> Download 8-bit RGB annual mosaics</h2>
+<pre class="r"><code># Loop all years
+out &lt;- lapply(years, function(year) {
+  print(year)
+  
+  # Filter Landsat collection to range of years
   col_yr &lt;- col$filter(ee$Filter$calendarRange(year - yearWindow,
                                                year + yearWindow,
                                                &quot;year&quot;))
+  # Median Pixel Value
   col_yr_median &lt;- col_yr$median()
+  
+  # Apply the vizParams to the image
   col_yr_median_rgb &lt;- do.call(col_yr_median$visualize, vizParams)
+  
+  # Export
   task &lt;- ee$batch$Export$image(
     image = col_yr_median_rgb,
     description = paste0(project_name, &quot;_LS_&quot;, year),
     config = list(
-      scale = 30,
+      scale = resolution,
       maxPixels = 1.0E13,
-      crs = &quot;EPSG:3005&quot;,
+      crs = col$first()$projection()$crs()$getInfo(),
       driveFolder = outfolder_name,
       region = aoi_ee
       )
@@ -557,19 +551,24 @@ task &lt;- ee$batch$Export$image(
   image = mydem,
   description = paste0(project_name, &quot;_DEM_SRTM&quot;),
   config = list(
-    scale = 30,
+    scale = resolution,
     maxPixels = 1.0E13,
-    crs = &quot;EPSG:3005&quot;,
+    crs = col$first()$projection()$crs()$getInfo(),
     driveFolder = outfolder_name,
     region = aoi_ee
     )
   )</code></pre>
 </div>
 </div>
-<div id="interpolate-missing-data" class="section level1" number="3">
-<h1 number="3"><span class="header-section-number">3</span> Interpolate missing data</h1>
-<div id="inspect-tifs" class="section level2" number="3.1">
-<h2 number="3.1"><span class="header-section-number">3.1</span> Inspect tifs</h2>
+<div id="wait-10ish-minutes-for-downloads-to-complete" class="section level1" number="3">
+<h1 number="3"><span class="header-section-number">3</span> Wait 10ish minutes for downloads to complete…</h1>
+<p>WAITING GAME for files to sync locally. There are ways around this with <code>ee_as_raster</code>, but that is not part of this tutorial.</p>
+</div>
+<div id="interpolate-missing-data-optional" class="section level1" number="4">
+<h1 number="4"><span class="header-section-number">4</span> Interpolate missing data (optional)</h1>
+<p>We interpolate missing data using the <code>forecast</code> package.</p>
+<div id="inspect-tifs" class="section level2" number="4.1">
+<h2 number="4.1"><span class="header-section-number">4.1</span> Inspect tifs</h2>
 <pre class="r"><code># LIST OF LANDSAT FILES
 files_LS &lt;- list.files(paste0(gdrive, outfolder_name), 
                        full.names = T,
@@ -584,18 +583,19 @@ rgb_LS &lt;- rgb_LS %&gt;%
   st_set_dimensions(3, as.character(years))
 
 rgb_LS %&gt;% plot()</code></pre>
-<p><img src="images/timeseries_raw_landsat.png" /></p>
+<p><img src="images/timeseries_raw_landsat.png" /> In the figure above, we see black spots. These are no data pixels.</p>
 </div>
-<div id="interpolate-time-series-for-each-band" class="section level2" number="3.2">
-<h2 number="3.2"><span class="header-section-number">3.2</span> Interpolate time series for each band</h2>
-<pre class="r"><code>dir.create(paste0(gdrive,outfolder_name,&quot;/gap_fill&quot;))
-files_LS &lt;-
-  list.files(paste0(gdrive, outfolder_name),
+<div id="impute-missing-data-in-the-timeseries" class="section level2" number="4.2">
+<h2 number="4.2"><span class="header-section-number">4.2</span> Impute missing data in the timeseries</h2>
+<pre class="r"><code># Create output directory 
+dir.create(paste0(gdrive,outfolder_name,&quot;/gap_fill&quot;))
+
+# Make a list of the images to interpolate
+files_LS &lt;-list.files(paste0(gdrive, outfolder_name),
              full.names = T,
              pattern = &quot;_LS_&quot;)
 
-years &lt;- seq(yearStart,yearEnd,yearInterval)
-
+# Define impute function
 my_func_ma &lt;- function(vals) {
   vals[vals==0] &lt;- NA
   if(sum(is.na(vals))&lt;25){
@@ -603,7 +603,9 @@ my_func_ma &lt;- function(vals) {
     }else{
       return(vals)}}
 
+# One band at a time, stack all images of the timeseries and impute. 
 slow_impute &lt;- function(band_no){
+  
   # READ STACK PER BAND
   band_stack &lt;- read_stars(files_LS)[,,,band_no, drop = T] %&gt;%
     st_redimension() 
@@ -615,22 +617,25 @@ slow_impute &lt;- function(band_no){
     st_set_dimensions(which = 1,
                       values = as.character(years),
                       names = &quot;year&quot;)
+  # WRITE OUTPUT
   write_stars(band_stack_ma, paste0(gdrive,outfolder_name,&quot;/gap_fill/band&quot;,band_no,&quot;_smooth.tif&quot;))
   return(band_no)}
 
+# RUN THIS IN PARALLEL
 plan(multicore)
-
 bands &lt;- 1:3
 band_test &lt;- future_lapply(bands, slow_impute)</code></pre>
 </div>
-<div id="combine-interpolated-data-into-rgb-images" class="section level2" number="3.3">
-<h2 number="3.3"><span class="header-section-number">3.3</span> Combine interpolated data into RGB images</h2>
-<pre class="r"><code>f &lt;- list.files(paste0(gdrive,outfolder_name,&quot;/gap_fill/&quot;), pattern = &quot;_smooth.tif&quot;, full.names = T)
-
-plan(multisession)
+<div id="combine-interpolated-data-into-rgb-images" class="section level2" number="4.3">
+<h2 number="4.3"><span class="header-section-number">4.3</span> Combine interpolated data into RGB images</h2>
+<pre class="r"><code># list of the three raster stacks (1 per band) that have been imputed
+f &lt;- list.files(paste0(gdrive,outfolder_name,&quot;/gap_fill/&quot;), pattern = &quot;_smooth.tif&quot;, full.names = T)
 
 bands &lt;- 1:length(years)
 
+plan(multisession)
+
+# for each band (i.e. year) join into RGB and write
 rgb_creator &lt;- function(j){
   i &lt;- read_stars(f[1])[,,,j, drop = T]
   names(i) &lt;- &quot;swir1&quot;
@@ -640,27 +645,24 @@ rgb_creator &lt;- function(j){
   write_stars(i, paste0(gdrive,outfolder_name,&quot;/gap_fill/&quot;,years[j],&quot;_final.tif&quot;))
   return(j)}
 
+# Run in par
 band_test &lt;- future_lapply(bands, rgb_creator)</code></pre>
 </div>
 </div>
-<div id="i-can-rayshade-a-time-series-and-so-can-you" class="section level1" number="4">
-<h1 number="4"><span class="header-section-number">4</span> I can rayshade (a time series) and so can you!</h1>
-<p>You might need to tinker with the settings to get the best view of your site.</p>
-<pre class="r"><code>if(SHOULD_I_RAYSHADE == T){
-  
-dir.create(paste0(gdrive,outfolder_name,&quot;/rayshader_out/&quot;), showWarnings = F)
+<div id="i-can-rayshade-a-time-series-and-so-can-you" class="section level1" number="5">
+<h1 number="5"><span class="header-section-number">5</span> I can rayshade (a time series) and so can you!</h1>
+<p>You might need to tinker with the settings to get the best view of your site. Section title inspired from: <a href="https://wcmbishop.github.io/rayshader-demo/" class="uri">https://wcmbishop.github.io/rayshader-demo/</a></p>
+<pre class="r"><code>dir.create(paste0(gdrive,outfolder_name,&quot;/rayshader_out/&quot;), showWarnings = F)
 
-  # LIST LANDSAT FILES 
-files_LS &lt;-
-  list.files(paste0(gdrive, outfolder_name,&quot;/gap_fill/&quot;),
-             full.names = T,
-             pattern = &quot;_final.tif&quot;)
+# LIST LANDSAT FILES 
+files_LS &lt;- list.files(paste0(gdrive, outfolder_name,&quot;/gap_fill/&quot;),
+                       full.names = T,
+                       pattern = &quot;_final.tif&quot;)
 
 # LIST DEM FILE
-files_DEM &lt;-
-  list.files(paste0(gdrive, outfolder_name),
-             full.names = T,
-             pattern = &quot;_DEM_&quot;)
+files_DEM &lt;- list.files(paste0(gdrive, outfolder_name),
+                        full.names = T,
+                        pattern = &quot;_DEM_&quot;)
 
 # LOAD DEM 
 dem &lt;- raster::raster(files_DEM)
@@ -669,6 +671,7 @@ dem_matrix = rayshader::raster_to_matrix(dem, verbose = F)
 # LOOP RAYSHADER FOR ALL YEARS
 
 lapply(years, function(year){
+  
   img &lt;- raster::stack(files_LS[grep(paste0(year,&quot;_final.tif&quot;), files_LS)])
   
   names(img) = c(&quot;r&quot;, &quot;g&quot;, &quot;b&quot;)
@@ -715,18 +718,24 @@ render_snapshot(
 )
 
 rgl::rgl.close()
-})
-}</code></pre>
+})</code></pre>
 <p><img src="images/1988.png" /></p>
 </div>
-<div id="i-can-animate-a-rayshader-overlay-and-so-can-you" class="section level1" number="5">
-<h1 number="5"><span class="header-section-number">5</span> I can animate a <code>rayshader</code> overlay, and so can you!</h1>
-<div id="in-3d" class="section level2" number="5.1">
-<h2 number="5.1"><span class="header-section-number">5.1</span> In 3D</h2>
+<div id="i-can-animate-a-rayshader-overlay-and-so-can-you" class="section level1" number="6">
+<h1 number="6"><span class="header-section-number">6</span> I can animate a <code>rayshader</code> overlay, and so can you!</h1>
+<div id="in-3d" class="section level2" number="6.1">
+<h2 number="6.1"><span class="header-section-number">6.1</span> In 3D</h2>
 <p>The <code>gifski</code> package is crazy fast, especially compared to <code>magick</code>..</p>
-<pre class="r"><code>dir.create(paste0(gdrive,outfolder_name,&quot;/gif_out/&quot;))
+<pre class="r"><code># Make an output file
+dir.create(paste0(gdrive,outfolder_name,&quot;/gif_out/&quot;))
+
+# List of 3D png&#39;s
 png_files &lt;- list.files(paste0(gdrive,outfolder_name,&quot;/rayshader_out/&quot;), full.names = T)
+
+# Out gif
 gif_file &lt;- paste0(paste0(gdrive,outfolder_name,&quot;/animation3d.gif&quot;))
+
+# Animate
 gifski(png_files, gif_file,
        width = ncol(png::readPNG(png_files[1])),
        height = nrow(png::readPNG(png_files[1])),
@@ -735,11 +744,14 @@ gifski(png_files, gif_file,
        progress = TRUE)</code></pre>
 <p><img src="images/animation-02.gif" /></p>
 </div>
-<div id="or-keep-it-2d" class="section level2" number="5.2">
-<h2 number="5.2"><span class="header-section-number">5.2</span> Or keep it <code>2D</code></h2>
+<div id="or-keep-it-2d" class="section level2" number="6.2">
+<h2 number="6.2"><span class="header-section-number">6.2</span> Or keep it <code>2D</code></h2>
 <pre class="r"><code>dir.create(paste0(gdrive,outfolder_name,&quot;/2Dtemp/&quot;))
+
+# List tifs
 tif_files &lt;- list.files(paste0(gdrive,outfolder_name,&quot;/gap_fill/&quot;), full.names = T, pattern = &quot;final&quot;)
 
+# Write png from tif
 plan(multisession)
 png_files &lt;- future_lapply(years, function(year){
   out_name &lt;- paste0(gdrive,outfolder_name,&quot;/2Dtemp/&quot;, year, &quot;v2.png&quot;)
@@ -749,6 +761,7 @@ png_files &lt;- future_lapply(years, function(year){
   dev.off()
   return(out_name)})
 
+# Animate 
 gif_file &lt;- paste0(paste0(gdrive,outfolder_name,&quot;/animation2d.gif&quot;))
 gifski(unlist(png_files), gif_file,
        width = ncol(png::readPNG(unlist(png_files)[1])),
