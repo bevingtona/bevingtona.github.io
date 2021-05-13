@@ -3,22 +3,26 @@ output_dir: "."
 navbar:
   title: "Alexandre R. Bevington"
   left:
-    - text: "CV"
-      href: pages/cv.html
-    - text: "Current Research"
-      href: pages/research.html
-    # - text: "Backcountry"
-    #   href: research.html
-    - text: Code Blog
+    - text: "Research"
+      menu: 
+      - text: "Publications"
+        href: cv.html
+      - text: "Current projects"
+        href: research.html
+    - text: "Code and stuff"
       menu:
+      # - text: R snippets
+      #   menu:
+        # - text: 'bob'
+        #   menu:
       - text: "Using the `stars` package"
-        href: code/20210329_stars.html  
+        href: 20210329_stars.html  
       - text: "3D timelapse from Landsat"
-        href: code/20210504_rgee_rayshade_gifski.html
+        href: 20210504_rgee_rayshade_gifski.html
       - text: "Download and animate Planet imagery"
-        href: code/20210507_PlanetR_Timelapse.html
+        href: 20210507_PlanetR_Timelapse.html
       - text: "River profile tool for British Columbia"
-        href: code/20210512_FWA_River_Profiles.html
+        href: 20210512_FWA_River_Profiles.html
       
       # - text: "SubMenu"
       #   menu:

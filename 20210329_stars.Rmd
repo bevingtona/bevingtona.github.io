@@ -1,0 +1,147 @@
+---
+title: "Using the `stars` package"
+pagetitle: "Alexandre R. Bevington"
+output:
+  html_document: 
+    toc: yes
+    number_sections: yes
+    toc_float:
+      collapsed: no
+      smooth_scroll: yes
+    # self_contained: yes
+---
+
+<link rel="stylesheet" href="styles.css" type="text/css">\
+<link rel="stylesheet" href="academicicons/css/academicons.min.css"/>
+
+Originally posted on 2021-03-29\
+Last updated `r lubridate::today()`
+
+This page is just a few examples and reminders about common tasks using the `stars` package.
+
+```{r, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(patchwork)
+library(stars)
+library(sf)
+```
+
+# Load data
+
+```{r load}
+tif = system.file("tif/L7_ETMs.tif", package = "stars")
+(x = read_stars(tif))
+```
+
+## Rename bands
+
+```{r}
+x <- st_set_dimensions(x, "band", c("blue","green","red","nir","swir1","swir2"))
+st_get_dimension_values(x, "band")
+```
+
+## Rename attribute
+
+```{r}
+x <- x %>% setNames("value")
+names(x)
+```
+
+## Plot bands
+
+```{r plotbands, fig.height= 2}
+
+ggplot() + 
+  geom_stars(data = x) + 
+  coord_equal() + 
+  theme_void() + 
+  scale_fill_viridis_c() + 
+  facet_wrap(~band, ncol = 6)
+```
+
+## Plot RGB
+
+```{r plotrgb, fig.height= 2}
+
+ggplot() + 
+  geom_stars(data = st_rgb(x[,,,c(3,2,1)])) + 
+  coord_equal() + 
+  scale_fill_identity() +
+  theme_void() + 
+  labs(title = "3,2,1")|
+ggplot() + 
+  geom_stars(data = st_rgb(x[,,,c(4,3,2)])) + 
+  coord_equal() + 
+  scale_fill_identity() +
+  theme_void() + 
+  labs(title = "4,3,2")|
+ggplot() + 
+  geom_stars(data = st_rgb(x[,,,c(6,4,2)])) + 
+  coord_equal() + 
+  scale_fill_identity() +
+  theme_void() + 
+  labs(title = "6,4,2")
+
+```
+
+# Clip to `sf`
+
+```{r, fig.height= 2}
+
+my_bbox <- x %>% st_bbox() %>% st_as_sfc() %>% st_as_sf()
+my_centroid <- my_bbox %>% st_centroid()
+my_aoi <- my_centroid %>% st_buffer(1000)
+
+ggplot() + 
+  geom_stars(data = x) +
+  geom_sf(data = my_aoi, fill = NA, color = "red") + 
+  theme_void()| 
+ggplot() + 
+  geom_stars(data = x[my_aoi]) +
+  geom_sf(data = my_aoi, fill = NA, color = "red") + 
+  theme_void()
+```
+
+# Summarize stack
+
+```{r, fig.height=2}
+ggplot() + 
+  geom_stars(data = st_apply(x, c("x", "y"), max)) + 
+  coord_equal() + 
+  theme_void() + 
+  scale_fill_viridis_c() 
+```
+
+# Stack calculations
+
+```{r}
+calc_ndvi <- function(x) (x[4] - x[3])/(x[4] + x[3])
+ndvi <-  st_apply(x, c("x", "y"), FUN = calc_ndvi)
+
+ggplot() + 
+  geom_stars(data = ndvi) + 
+  coord_equal() +
+  theme_void() +
+  scale_fill_gradientn(colours = RColorBrewer::brewer.pal(n = 9, name = "RdYlGn"), 
+                       limits = c(-1,1), 
+                       guide = guide_colorbar(barheight = 10, 
+                                              frame.colour = "black", 
+                                              frame.linewidth = 1.5,
+                                              ticks.colour = NA)) + 
+  labs(fill = "NDVI")
+
+```
+
+# `stars` to `sf`
+
+```{r}
+
+ndvi$groups <- cut(ndvi$calc_ndvi, c(-Inf,-0.5,0,0.5,Inf), c(-0.75,-0.25,0.25,0.75))
+
+ndvi_sf <- ndvi["groups"] %>% st_as_sf(merge = T)
+
+ggplot() + 
+  geom_sf(data = ndvi_sf, aes(fill = groups)) +
+  labs(fill = "NDVI groups") + 
+  theme_void()
+```
