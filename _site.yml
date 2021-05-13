@@ -5,8 +5,10 @@ navbar:
   left:
     - text: "Research"
       menu: 
-      - text: "Publications"
+      - text: "CV"
         href: cv.html
+      - text: "Publications and Presentations"
+        href: pubs.html
       - text: "Current projects"
         href: research.html
     - text: "Code and stuff"
