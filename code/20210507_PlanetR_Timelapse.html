@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Alexandre R. Bevington</title>
+
+<script src="20210507_PlanetR_Timelapse_files/header-attrs-2.7/header-attrs.js"></script>
+<script src="20210507_PlanetR_Timelapse_files/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="20210507_PlanetR_Timelapse_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="20210507_PlanetR_Timelapse_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="20210507_PlanetR_Timelapse_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="20210507_PlanetR_Timelapse_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="20210507_PlanetR_Timelapse_files/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="20210507_PlanetR_Timelapse_files/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="20210507_PlanetR_Timelapse_files/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="20210507_PlanetR_Timelapse_files/navigation-1.1/tabsets.js"></script>
+<link href="20210507_PlanetR_Timelapse_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="20210507_PlanetR_Timelapse_files/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+}
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-sm-12 col-md-4 col-lg-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-sm-12 col-md-8 col-lg-9">
+
+
+
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Download and animate Planet imagery</h1>
+
+</div>
+
+
+<p><link rel="stylesheet" href="../styles.css" type="text/css"><br />
+<link rel="stylesheet" href="../academicicons/css/academicons.min.css"/></p>
+<p>Originally posted on 2021-05-07<br />
+Last updated 2021-05-13</p>
+<p><img src="https://i.imgur.com/qLj0wsJ.gif" width="400" /></p>
+<div id="setup-your-project" class="section level1" number="1">
+<h1 number="1"><span class="header-section-number">1</span> Setup your project</h1>
+<p>First load the following libraries:</p>
+<pre class="r"><code># PLANET API
+library(planetR)
+library(httr)
+library(jsonlite)
+
+# RASTER STUFF
+library(raster)
+library(stars)
+library(sf)
+
+# TIDYNESS
+library(stringr)
+library(tidyverse)
+
+# PARALLEL
+library(future.apply)</code></pre>
+</div>
+<div id="project" class="section level1" number="2">
+<h1 number="2"><span class="header-section-number">2</span> Project</h1>
+<pre class="r"><code># Set API
+api_key = &quot;&quot; 
+site = &quot;MyProjectName&quot;
+
+# Date range of interest
+start_year = 2016
+end_year   = 2020
+start_doy  = as.numeric(format(as.Date(&#39;2000-04-15&#39;),&quot;%j&quot;))
+end_doy    = as.numeric(format(as.Date(&#39;2000-10-15&#39;),&quot;%j&quot;))
+date_start = as.Date(paste0(start_year,&quot;-01-01&quot;))+start_doy
+date_end   = as.Date(paste0(end_year,&quot;-01-01&quot;))+end_doy
+
+# Metadata filters
+cloud_lim    = 0.10 # percent from 0-1
+item_name    = &quot;PSScene4Band&quot; #PSOrthoTile, PSScene3Band, Sentinel2L1C 
+product      = &quot;analytic_sr&quot; #analytic_b1, analytic_b2 
+
+#(see https://developers.planet.com/docs/data/items-assets/)
+#(see https://developers.planet.com/docs/data/items-assets/)
+  
+# Create Folders
+root = &quot;E:/Planet/&quot;
+dir.create(root, showWarnings = F)
+
+exportfolder = paste0(root,site,&quot;_&quot;,item_name,&quot;_&quot;,product,&quot;_&quot;,start_year,&quot;_&quot;,end_year,&quot;_&quot;,start_doy,&quot;_&quot;,end_doy,&quot;/&quot;)
+dir.create(exportfolder, showWarnings = F)
+    
+aoi_folder &lt;- paste0(exportfolder,&quot;1_aoi/&quot;)
+dir.create(aoi_folder, showWarnings = F)
+    
+raw_folder &lt;- paste0(exportfolder,&quot;2_raw/&quot;)
+dir.create(raw_folder, showWarnings = F)
+    
+smooth_folder &lt;- paste0(exportfolder,&quot;3_smooth/&quot;)
+dir.create(smooth_folder, showWarnings = F)
+    
+png_folder &lt;- paste0(exportfolder,&quot;4_png/&quot;)
+dir.create(png_folder, showWarnings = F)
+
+gif_folder &lt;- paste0(exportfolder,&quot;5_gif/&quot;)
+dir.create(gif_folder, showWarnings = F)
+    
+# Set AOI (many ways to set this!) ultimately just need an extent()
+    
+my_aoi = mapedit::editMap() # Set in GUI
+sf::write_sf(my_aoi, paste0(aoi_folder,site,&quot;.gpkg&quot;))
+my_aoi &lt;- sf::st_read(paste0(aoi_folder,site,&quot;.gpkg&quot;))
+# my_aoi %&gt;% mapview::mapview()
+bbox  &lt;-  extent(my_aoi)</code></pre>
+</div>
+<div id="planet" class="section level1" number="3">
+<h1 number="3"><span class="header-section-number">3</span> Planet</h1>
+<div id="search" class="section level2" number="3.1">
+<h2 number="3.1"><span class="header-section-number">3.1</span> Search</h2>
+<pre class="r"><code>response &lt;- planet_search(bbox, date_end, date_start, cloud_lim, item_name)
+print(paste(&quot;Images available:&quot;, nrow(response), item_name, product))</code></pre>
+</div>
+<div id="activate" class="section level2" number="3.2">
+<h2 number="3.2"><span class="header-section-number">3.2</span> Activate</h2>
+<pre class="r"><code>for(i in 1:nrow(response)) {
+  planet_activate(i, item_name = item_name)
+  print(paste(&quot;Activating&quot;, i, &quot;of&quot;, nrow(response)))}</code></pre>
+</div>
+<div id="wait" class="section level2" number="3.3">
+<h2 number="3.3"><span class="header-section-number">3.3</span> Wait</h2>
+<pre class="r"><code>Sys.sleep(10*60)</code></pre>
+</div>
+<div id="download" class="section level2" number="3.4">
+<h2 number="3.4"><span class="header-section-number">3.4</span> Download</h2>
+<pre class="r"><code>plan(multisession)
+future_lapply(1:nrow(response), 
+              planet_download_withClip, 
+              my_aoi = my_aoi, 
+              out_dir = raw_folder)</code></pre>
+</div>
+</div>
+<div id="local" class="section level1" number="4">
+<h1 number="4"><span class="header-section-number">4</span> Local</h1>
+<div id="impute-missing-data" class="section level2" number="4.1">
+<h2 number="4.1"><span class="header-section-number">4.1</span> Impute missing data</h2>
+<pre class="r"><code>raw_list &lt;- list.files(raw_folder, pattern = &quot;*.tif$&quot;)
+bands &lt;- c(&quot;blue&quot;,&quot;green&quot;,&quot;red&quot;,&quot;nir&quot;)
+resolution &lt;- 3
+
+# Make a blank Canvas
+my_aoi_r &lt;- my_aoi %&gt;% mutate(val = 1) %&gt;% 
+  dplyr::select(val) %&gt;%
+  st_transform(crs = st_crs(read_stars(paste0(raw_folder,raw_list[1])))) %&gt;% 
+  st_rasterize(st_as_stars(st_bbox(.), 
+                           dx = resolution, 
+                           dy = resolution, 
+                           values = NA_integer_))
+
+# Format dates
+dates &lt;- as.character(as.Date(
+  str_split(sub(exportfolder,&quot;&quot;,raw_list),&quot;_&quot;, simplify = T)[,1],
+  format = &quot;%Y%m%d&quot;))
+
+# Impute stack function 
+imputer &lt;- function(band = 1){
+  stack &lt;- do.call(c, lapply(1:length(raw_list), function(i){
+    date &lt;- date[i]
+    r &lt;- read_stars(paste0(raw_folder,raw_list[i]))[,,,band, drop = T] %&gt;% 
+      st_warp(dest = my_aoi_r)
+    names(r) &lt;- date
+    print(date)
+    return(r)})) %&gt;% 
+    st_redimension()
+  
+  write_stars(stack, paste0(smooth_folder,&quot;/&quot;,bands[band],&quot;_&quot;,resolution,&quot;m.tif&quot;))
+      
+  my_func_ma &lt;- function(vals){
+    vals[vals==0] &lt;- NA
+    if(sum(!is.na(vals))&gt;10){
+      return(as.numeric(forecast::na.interp(vals)))}else{
+        return(vals)}}
+  
+  stack_imp &lt;- st_apply(stack,
+                        MARGIN = c(&quot;x&quot;, &quot;y&quot;),
+                        FUN = my_func_ma)
+  
+  write_stars(stack_imp, paste0(smooth_folder,&quot;/&quot;,bands[band],&quot;_smooth_&quot;,
+                                resolution,&quot;m.tif&quot;))}
+  
+plan(multisession)
+future_lapply(1:length(bands), imputer)  </code></pre>
+</div>
+<div id="stack-to-rgb-figures" class="section level2" number="4.2">
+<h2 number="4.2"><span class="header-section-number">4.2</span> Stack to RGB figures</h2>
+<pre class="r"><code>smooth_stacks &lt;- list.files(path = smooth_folder, 
+                            pattern = paste0(&quot;_smooth_&quot;,resolution,&quot;m.tif&quot;))
+
+    
+my_rgbER &lt;- function(j){
+  myrgb &lt;- raster::stack(
+    raster::stack(paste0(smooth_folder,smooth_stacks[4]))[[j]],
+    raster::stack(paste0(smooth_folder,smooth_stacks[2]))[[j]],
+    raster::stack(paste0(smooth_folder,smooth_stacks[1]))[[j]])
+  
+  myrgb_stretch &lt;- myrgb %&gt;% st_as_stars() %&gt;% 
+    st_rgb(maxColorValue = 65535, probs = c(0.01,0.95), stretch = T)
+  
+  png(paste0(png_folder,dates[j],&quot;_v2.png&quot;), 
+      width = 2000, 
+      height = 2000, 
+      pointsize = 60)
+  myrgb_stretch %&gt;% plot(main = dates[j])
+  dev.off()
+  return(j)}
+    
+plan(multisession)
+future_lapply(1:length(dates), my_rgbER)</code></pre>
+</div>
+<div id="animate" class="section level2" number="4.3">
+<h2 number="4.3"><span class="header-section-number">4.3</span> Animate</h2>
+<pre class="r"><code>png_files &lt;- list.files(png_folder, full.names = T)
+      
+speed_s &lt;- 0.1
+      
+gifski::gifski(png_files = png_files, 
+               gif_file = paste0(gif_folder,site,&quot;_&quot;,speed_s*1000,&quot;ms_full.gif&quot;),
+               width = ncol(png::readPNG(png_files[1])),
+               height = nrow(png::readPNG(png_files[1])),
+               delay = speed_s,
+               loop = TRUE,
+               progress = TRUE)</code></pre>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

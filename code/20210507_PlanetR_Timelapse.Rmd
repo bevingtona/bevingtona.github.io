@@ -1,0 +1,258 @@
+---
+title: "Download and animate Planet imagery"
+pagetitle: "Alexandre R. Bevington"
+output:
+  html_document: 
+    toc: yes
+    number_sections: yes
+    toc_float:
+      collapsed: no
+      smooth_scroll: yes
+    self_contained: no
+editor_options: 
+  chunk_output_type: console
+---
+
+<link rel="stylesheet" href="../styles.css" type="text/css">\
+<link rel="stylesheet" href="../academicicons/css/academicons.min.css"/>
+
+Originally posted on 2021-05-07\
+Last updated `r lubridate::today()`
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+	eval = FALSE,
+	message = FALSE,
+	warning = FALSE,
+	include = TRUE
+)
+
+```
+
+
+![](https://i.imgur.com/qLj0wsJ.gif){width="400"}
+
+# Setup your project
+
+First load the following libraries:
+
+```{r libraries}
+
+# PLANET API
+library(planetR)
+library(httr)
+library(jsonlite)
+
+# RASTER STUFF
+library(raster)
+library(stars)
+library(sf)
+
+# TIDYNESS
+library(stringr)
+library(tidyverse)
+
+# PARALLEL
+library(future.apply)
+
+```
+
+# Project
+
+```{r proj}
+
+# Set API
+api_key = "" 
+site = "MyProjectName"
+
+# Date range of interest
+start_year = 2016
+end_year   = 2020
+start_doy  = as.numeric(format(as.Date('2000-04-15'),"%j"))
+end_doy    = as.numeric(format(as.Date('2000-10-15'),"%j"))
+date_start = as.Date(paste0(start_year,"-01-01"))+start_doy
+date_end   = as.Date(paste0(end_year,"-01-01"))+end_doy
+
+# Metadata filters
+cloud_lim    = 0.10 # percent from 0-1
+item_name    = "PSScene4Band" #PSOrthoTile, PSScene3Band, Sentinel2L1C 
+product      = "analytic_sr" #analytic_b1, analytic_b2 
+
+#(see https://developers.planet.com/docs/data/items-assets/)
+#(see https://developers.planet.com/docs/data/items-assets/)
+  
+# Create Folders
+root = "E:/Planet/"
+dir.create(root, showWarnings = F)
+
+exportfolder = paste0(root,site,"_",item_name,"_",product,"_",start_year,"_",end_year,"_",start_doy,"_",end_doy,"/")
+dir.create(exportfolder, showWarnings = F)
+    
+aoi_folder <- paste0(exportfolder,"1_aoi/")
+dir.create(aoi_folder, showWarnings = F)
+    
+raw_folder <- paste0(exportfolder,"2_raw/")
+dir.create(raw_folder, showWarnings = F)
+    
+smooth_folder <- paste0(exportfolder,"3_smooth/")
+dir.create(smooth_folder, showWarnings = F)
+    
+png_folder <- paste0(exportfolder,"4_png/")
+dir.create(png_folder, showWarnings = F)
+
+gif_folder <- paste0(exportfolder,"5_gif/")
+dir.create(gif_folder, showWarnings = F)
+    
+# Set AOI (many ways to set this!) ultimately just need an extent()
+    
+my_aoi = mapedit::editMap() # Set in GUI
+sf::write_sf(my_aoi, paste0(aoi_folder,site,".gpkg"))
+my_aoi <- sf::st_read(paste0(aoi_folder,site,".gpkg"))
+# my_aoi %>% mapview::mapview()
+bbox  <-  extent(my_aoi)
+
+```
+
+# Planet
+
+## Search
+
+```{r search}
+
+response <- planet_search(bbox, date_end, date_start, cloud_lim, item_name)
+print(paste("Images available:", nrow(response), item_name, product))
+
+```
+
+## Activate
+
+```{r activate}
+
+for(i in 1:nrow(response)) {
+  planet_activate(i, item_name = item_name)
+  print(paste("Activating", i, "of", nrow(response)))}
+
+```
+
+## Wait
+
+```{r wait}
+
+Sys.sleep(10*60)
+
+```
+
+## Download
+
+```{r download}
+
+plan(multisession)
+future_lapply(1:nrow(response), 
+              planet_download_withClip, 
+              my_aoi = my_aoi, 
+              out_dir = raw_folder)
+
+```
+
+# Local
+
+## Impute missing data
+
+```{r impute}
+  
+raw_list <- list.files(raw_folder, pattern = "*.tif$")
+bands <- c("blue","green","red","nir")
+resolution <- 3
+
+# Make a blank Canvas
+my_aoi_r <- my_aoi %>% mutate(val = 1) %>% 
+  dplyr::select(val) %>%
+  st_transform(crs = st_crs(read_stars(paste0(raw_folder,raw_list[1])))) %>% 
+  st_rasterize(st_as_stars(st_bbox(.), 
+                           dx = resolution, 
+                           dy = resolution, 
+                           values = NA_integer_))
+
+# Format dates
+dates <- as.character(as.Date(
+  str_split(sub(exportfolder,"",raw_list),"_", simplify = T)[,1],
+  format = "%Y%m%d"))
+
+# Impute stack function 
+imputer <- function(band = 1){
+  stack <- do.call(c, lapply(1:length(raw_list), function(i){
+    date <- date[i]
+    r <- read_stars(paste0(raw_folder,raw_list[i]))[,,,band, drop = T] %>% 
+      st_warp(dest = my_aoi_r)
+    names(r) <- date
+    print(date)
+    return(r)})) %>% 
+    st_redimension()
+  
+  write_stars(stack, paste0(smooth_folder,"/",bands[band],"_",resolution,"m.tif"))
+      
+  my_func_ma <- function(vals){
+    vals[vals==0] <- NA
+    if(sum(!is.na(vals))>10){
+      return(as.numeric(forecast::na.interp(vals)))}else{
+        return(vals)}}
+  
+  stack_imp <- st_apply(stack,
+                        MARGIN = c("x", "y"),
+                        FUN = my_func_ma)
+  
+  write_stars(stack_imp, paste0(smooth_folder,"/",bands[band],"_smooth_",
+                                resolution,"m.tif"))}
+  
+plan(multisession)
+future_lapply(1:length(bands), imputer)  
+  
+```
+
+## Stack to RGB figures
+
+```{r rgb}
+
+smooth_stacks <- list.files(path = smooth_folder, 
+                            pattern = paste0("_smooth_",resolution,"m.tif"))
+
+    
+my_rgbER <- function(j){
+  myrgb <- raster::stack(
+    raster::stack(paste0(smooth_folder,smooth_stacks[4]))[[j]],
+    raster::stack(paste0(smooth_folder,smooth_stacks[2]))[[j]],
+    raster::stack(paste0(smooth_folder,smooth_stacks[1]))[[j]])
+  
+  myrgb_stretch <- myrgb %>% st_as_stars() %>% 
+    st_rgb(maxColorValue = 65535, probs = c(0.01,0.95), stretch = T)
+  
+  png(paste0(png_folder,dates[j],"_v2.png"), 
+      width = 2000, 
+      height = 2000, 
+      pointsize = 60)
+  myrgb_stretch %>% plot(main = dates[j])
+  dev.off()
+  return(j)}
+    
+plan(multisession)
+future_lapply(1:length(dates), my_rgbER)
+  
+```
+
+## Animate
+
+```{r animate}
+
+png_files <- list.files(png_folder, full.names = T)
+      
+speed_s <- 0.1
+      
+gifski::gifski(png_files = png_files, 
+               gif_file = paste0(gif_folder,site,"_",speed_s*1000,"ms_full.gif"),
+               width = ncol(png::readPNG(png_files[1])),
+               height = nrow(png::readPNG(png_files[1])),
+               delay = speed_s,
+               loop = TRUE,
+               progress = TRUE)
+
+```
