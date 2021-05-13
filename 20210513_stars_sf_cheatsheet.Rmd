@@ -1,0 +1,52 @@
+---
+title: "`stars` and `sf` cheatsheet"
+pagetitle: "Alexandre R. Bevington"
+output:
+  html_document: 
+    toc: yes
+    number_sections: yes
+    toc_float:
+      collapsed: no
+      smooth_scroll: yes
+    # self_contained: yes
+---
+
+<link rel="stylesheet" href="styles.css" type="text/css">\
+<link rel="stylesheet" href="academicicons/css/academicons.min.css"/>
+
+Originally posted on 2021-03-29\
+Last updated `r lubridate::today()`
+
+This page is just a few examples and reminders about common tasks using the `stars` package.
+
+```{r, message=FALSE, warning=FALSE}
+library(stars)
+library(dplyr)
+library(sf)
+library(mapview)
+nc <- st_read(system.file("shape/nc.shp", package="sf"))
+
+```
+
+# `sf`
+
+## read / write
+
+### simple
+
+### database
+
+## Geometric operations 
+
+### Dissolve
+
+```{r}
+nc %>% summarize() %>% mapview()
+nc %>% st_buffer(10) %>% st_union() %>%
+  st_sf() %>% st_cast("POLYGON", group_or_split = F) %>% mapview()
+
+```
+
+## Zonal operations 
+
+## 
