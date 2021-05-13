@@ -30,7 +30,7 @@ knitr::opts_chunk$set(
 
 The purpose of this page is to demonstrate how to make a 3D timelapse animation from Landsat imagery. This code is a bit confusing and hacks together many different workflows. Slowly over time I hope to improve this code.
 
-![](../images/animation-01.gif){width="282"}
+![](https://imgur.com/rv3VxAm){width="282"}
 
 # Setup your project
 
@@ -480,4 +480,8 @@ gifski(unlist(png_files), gif_file,
 
 ```
 
-![](../images/animation2d.gif)
+
+![](http://i.imgur.com/FmyL6d9h.gif){width="400"}
+
+
+

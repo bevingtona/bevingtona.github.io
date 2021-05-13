@@ -30,7 +30,11 @@ knitr::opts_chunk$set(
 ```
 
 
-![](https://i.imgur.com/qLj0wsJ.gif){width="400"}
+
+<blockquote class="imgur-embed-pub" lang="en" data-id="a/qLj0wsJ" data-context="false" ><a href="//imgur.com/a/qLj0wsJ"></a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+
+
+![imgur](https://i.imgur.com/qLj0wsJ.gif){width="400"}
 
 # Setup your project
 
