@@ -1,0 +1,140 @@
+---
+title: "Sentinel-3 Land Surface Temperature"
+pagetitle: "Alexandre R. Bevington"
+output:
+  html_document: 
+    toc: yes
+    number_sections: yes
+    toc_float:
+      collapsed: no
+      smooth_scroll: yes
+    self_contained: no
+---
+
+<link rel="stylesheet" href="../../styles.css" type="text/css">\
+<link rel="stylesheet" href="../../academicicons/css/academicons.min.css"/>
+
+Originally posted on 2021-07-02\
+Last updated `r lubridate::today()`
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+	eval = FALSE,
+	message = FALSE,
+	warning = FALSE,
+	include = TRUE
+)
+```
+
+![](images/layout.png)
+
+# Get the data
+
+## Libraries
+
+```{r}
+library(getSpatialData)
+library(bcmaps)
+library(dplyr)
+library(stars)
+library(sf)
+library(future.apply)
+```
+
+## Set download location
+
+```{r}
+set_archive("E:/")
+```
+
+## Set AOI
+
+```{r}
+set_aoi(bc_bound() %>% as_Spatial())
+view_aoi()
+```
+
+## Log in to Copernicus Data Hub
+
+```{r}
+login_CopHub(username = "bevingtona")
+```
+
+## Search Records
+
+```{r}
+records <- get_records(time_range = c("2021-06-28", "2021-06-29"),
+                       products = c("Sentinel-3"))
+records %>% head() %>% glimpse()
+```
+
+## Filter Records
+
+```{r}
+records <- records %>% 
+  filter(product_type == "SL_2_LST___")
+
+records <- records %>% 
+  filter(start_time > lubridate::ymd_hms("2021-06-28 18:20:00 UTC"),
+         start_time < lubridate::ymd_hms("2021-06-28 19:30:00 UTC"))
+```
+
+## Download
+
+```{r}
+records <- get_data(records)
+```
+
+# Unzip files
+
+```{r}
+setwd("E:/_datasets/sentinel-3/")
+zips <- list.files(pattern = ".zip", full.names = T)
+done_zip <- lapply(zips, function(zip){unzip(zip) 
+  return(zip)})
+```
+
+# Make GeoTIFFs
+
+```{r, eval=F}
+res = 2000
+dirs <- list.dirs()
+
+plan(multisession)
+
+future_lapply(dirs[2:length(dirs)], function(dir){
+  
+  lst <- read_stars(list.files(dir, 
+                               pattern = "LST_in.nc", 
+                               full.names = T))
+  xy <- read_stars(list.files(dir, 
+                              pattern = "geodetic_in.nc", 
+                              full.names = T))
+  
+  df <- bind_cols(as.data.frame(xy), 
+                  as.data.frame(lst)) %>% 
+    select(longitude_in,
+           latitude_in,
+           LST) %>% 
+    mutate(LST = as.numeric(LST)-273.15) %>% # K to C
+    filter(!is.na(LST)) # Remove NA
+  
+  df_sf <- df %>% 
+    st_as_sf(coords = c("longitude_in",
+                        "latitude_in"), 
+             crs = 4326) %>% 
+    st_transform(3005)
+  
+  templ <- st_as_stars(st_bbox(df_sf), 
+                       dx = res, 
+                       dy = res, 
+                       values = NA_real_)
+  
+  ras <- df_sf %>% st_rasterize(templ)
+  
+  ras_clip <- ras[bc_bound()]
+  
+  write_stars(ras_clip, sub(".SEN3",paste0("_",res,".tif"),dir))
+  
+  return(dir)})
+```
