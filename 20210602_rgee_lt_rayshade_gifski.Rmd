@@ -62,7 +62,7 @@ library(future.apply)
 Then connect to GEE, more info on connecting your Earth Engine credentials can be found here: <https://r-spatial.github.io/rgee/reference/ee_Initialize.html>.
 
 ```{r initialize}
-rgee::ee_Initialize(user = "bevingtona", drive = T)
+rgee::ee_Initialize(email = "bevingtona", drive = T)
 ```
 
 Define your area of interest as an `sf` polygon. In the commented code below, I use the `mapedit` package to digitize an `aoi`, then I save it locally to reproduce the workflow later on. The polygon is then loaded to Earth Engine. There are many ways to do this step.
@@ -70,16 +70,91 @@ Define your area of interest as an `sf` polygon. In the commented code below, I 
 *Pro tip \#1: Keep the polygon simple, ideally just a rectangle.* *Pro tip \#2: The larger the polygon, the slower the workflow, start small!*
 
 ```{r aoi}
-# aoi <- mapedit::editMap() #create AOI
-project_name <- "castle" #unique name for the project
-# write_sf(aoi, paste0(project_name,".gpkg")) #write aoi locally
+
+aoi <- mapedit::editMap() #create AOI
+project_name <- "random_mine" #unique name for the project
+write_sf(aoi, paste0(project_name,".gpkg")) #write aoi locally
 aoi <- read_sf(paste0(project_name,".gpkg")) #read from local
 aoi_ee <- rgee::sf_as_ee(aoi)$geometry() # convert aoi to earth engine object
 Map$centerObject(aoi_ee) #centre map to aoi
 Map$addLayer(aoi_ee) #plot aoi from earth engine
+
 ```
 
 Here we set up the project with key variables for the rest of the script. Most are intuitive, but I've added some comments to help explain.
+
+
+```{r}
+
+startYear = 1985
+endYear = 2017
+startDay = '06-20'
+endDay = '09-20'
+index = 'NBR'
+maskThese = c('cloud', 'shadow')
+
+runParams = c(
+  maxSegments=           6,
+  spikeThreshold=        0.9,
+  vertexCountOvershoot=  3,
+  preventOneYearRecovery=T,
+  recoveryThreshold=     0.25,
+  pvalThreshold=         0.05,
+  bestModelProportion=   0.75,
+  minObservationsNeeded= 6)
+
+changeParams = c(
+  delta=  'loss',
+  sort=   'greatest',
+  year=   c(checked=T, start=1986, end=2017),
+  mag=    c(checked=T, value=200,  operator='>'),
+  dur=    c(checked=T, value=4,    operator='<'),
+  preval= c(checked=T, value=300,  operator='>'),
+  mmu=    c(checked=T, value=11))
+
+changeParams.index = index
+
+// run landtrendr
+lt = ltgee.runLT(startYear, endYear, startDay, endDay, aoi, index, [], runParams, maskThese)
+
+// get the change map layers
+changeImg = ltgee.getChangeMap(lt, changeParams)
+
+// set visualization dictionaries
+palette = ['#9400D3', '#4B0082', '#0000FF', '#00FF00', '#FFFF00', '#FF7F00', '#FF0000']
+yodVizParms = {
+  min: startYear,
+  max: endYear,
+  palette: palette
+}
+
+magVizParms = {
+  min: 200,
+  max: 800,
+  palette: palette
+}
+
+// display the change attribute map - note that there are other layers - print changeImg to console to see all
+Map.centerObject(aoi, 11)
+Map.addLayer(changeImg.select(['mag']), magVizParms, 'Magnitude of Change')
+Map.addLayer(changeImg.select(['yod']), yodVizParms, 'Year of Detection')
+
+// export change data to google drive
+region = aoi.buffer(100000).bounds()
+exportImg = changeImg.clip(region).unmask(0).short()
+Export.image.toDrive({
+  image: exportImg, 
+  description: 'lt-gee_disturbance_map', 
+  folder: 'lt-gee_disturbance_map', 
+  fileNamePrefix: 'lt-gee_disturbance_map', 
+  region: region, 
+  scale: 30, 
+  crs: 'EPSG:5070', 
+  maxPixels: 1e13
+})
+
+```
+
 
 ```{r proj}
 resolution <- 30 # Imagery and DEM resolution in m
@@ -87,7 +162,7 @@ cloud <- 10 # Landsat metadata cloud cover threshold
 monthStart <- 7 # filter months included in mosaics. 
 monthEnd <- 9 # filter months included in mosaics.
 yearStart <- 1985 # filter year included in mosaics.
-yearEnd <- 2021 # filter year included in mosaics.
+yearEnd <- 2020 # filter year included in mosaics.
 yearWindow <- 2 # if 0 mosaics are for 1 year, if 1 then for +- 1 year
 yearInterval <- 1 # if 1 then mosaic every year, if 10 then every 10 years. 
 years <- seq(yearStart, yearEnd, yearInterval)
@@ -240,7 +315,6 @@ task <- ee$batch$Export$image(
     region = aoi_ee
     )
   )
-task$start()
 ```
 
 # Wait 10ish min
@@ -294,7 +368,7 @@ my_func_ma <- function(vals) {
       return(vals)}}
 
 # One band at a time, stack all images of the timeseries and impute. 
-slow_impute <- function(band_no=1){
+slow_impute <- function(band_no){
   
   # READ STACK PER BAND
   band_stack <- read_stars(files_LS)[,,,band_no, drop = T] %>%
@@ -312,7 +386,7 @@ slow_impute <- function(band_no=1){
   return(band_no)}
 
 # RUN THIS IN PARALLEL
-plan(multisession)
+plan(multicore)
 bands <- 1:3
 band_test <- future_lapply(bands, slow_impute)
 
@@ -368,7 +442,7 @@ dem_matrix = rayshader::raster_to_matrix(dem, verbose = F)
 
 # LOOP RAYSHADER FOR ALL YEARS
 
-lapply(years, function(year=2021){
+lapply(years, function(year){
   
   img <- raster::stack(files_LS[grep(paste0(year,"_final.tif"), files_LS)])
   
@@ -393,31 +467,24 @@ lapply(years, function(year=2021){
     windowsize = c(2000,2000),
     zscale = 20, # bigger is flatter
     baseshape = "rectangle",
-    # solid = TRUE,
-    # soliddepth = "auto",
-    # solidcolor = "black",
-    # solidlinecolor = "black",
-    # shadow = F,
-    theta = 140, # SOUTH = 180
-    phi = 40, # NADIR = 90
+    solid = TRUE,
+    soliddepth = "auto",
+    solidcolor = "black",
+    solidlinecolor = "black",
+    shadow = F,
+    theta = 40, # SOUTH = 180
+    phi = 30, # NADIR = 90
     fov = 60, #100 = fish-eye
-    zoom = 0.8 # small = close
-    # background = "black"
+    zoom = 0.8, # small = close
+    background = "black"
   )
-
-render_scalebar(limits=c(0, 5, 10),
-                label_unit = "km",position = "E", 
-                y=50,
-                scale_length = c(0.33,1))
-render_compass(position = "N", compass_radius = 20)
-
 
 render_snapshot(
   filename = paste0(gdrive,outfolder_name,"/rayshader_out/",year,".png"),
   title_text = year,
-  title_bar_color = "white",
+  title_bar_color = "black",
   title_size = 2000*0.1,
-  title_color = "black",
+  title_color = "white",
   title_position = "north",
   title_bar_alpha = 1
 )

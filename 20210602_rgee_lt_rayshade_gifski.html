@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Alexandre R. Bevington</title>
+
+<script src="site_libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+}
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Alexandre R. Bevington</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Research
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="cv.html">CV</a>
+    </li>
+    <li>
+      <a href="pubs.html">Publications and Presentations</a>
+    </li>
+    <li>
+      <a href="research.html">Current projects</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Code and stuff
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="20210329_stars.html">Using the `stars` package</a>
+    </li>
+    <li>
+      <a href="20210504_rgee_rayshade_gifski.html">3D timelapse from Landsat</a>
+    </li>
+    <li>
+      <a href="20210507_PlanetR_Timelapse.html">Download and animate Planet imagery</a>
+    </li>
+    <li>
+      <a href="20210512_FWA_River_Profiles.html">River profile tool for British Columbia</a>
+    </li>
+    <li>
+      <a href="20210702_getspatialdata_sentinel3.html">Sentinel-3 Land Surface Temperature</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://www.researchgate.net/profile/Alexandre-Bevington">RG</a>
+</li>
+<li>
+  <a href="https://github.com/bevingtona">GitHub</a>
+</li>
+<li>
+  <a href="https://twitter.com/abevingtona">Twitter</a>
+</li>
+<li>
+  <a href="https://www.linkedin.com/in/bevingtona/">Linked-In</a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">3D timelapse from Landsat</h1>
+
+</div>
+
+
+<p><link rel="stylesheet" href="../../styles.css" type="text/css"><br />
+<link rel="stylesheet" href="../../academicicons/css/academicons.min.css"/></p>
+<p>Originally posted on 2021-05-04<br />
+Last updated 2021-07-02</p>
+<p>The purpose of this page is to demonstrate how to make a 3D timelapse animation from Landsat imagery. This code is a bit confusing and hacks together many different workflows. Slowly over time I hope to improve this code.</p>
+<p><img src="images/animation.gif" width="282" /></p>
+<div id="setup-your-project" class="section level1" number="1">
+<h1 number="1"><span class="header-section-number">1</span> Setup your project</h1>
+<p>First load the following libraries:</p>
+<pre class="r"><code># LANDSAT MOSAICS 
+library(mapedit)
+library(rgee)
+library(sf)
+
+# GAP FILL TIMESERIES
+library(stars)
+library(forecast)
+
+# RAYSHADER 
+library(raster)
+library(rayshader)
+
+# ANIMATION
+library(gifski)
+
+# PARALLEL 
+library(future)
+library(future.apply)</code></pre>
+<p>Then connect to GEE, more info on connecting your Earth Engine credentials can be found here: <a href="https://r-spatial.github.io/rgee/reference/ee_Initialize.html" class="uri">https://r-spatial.github.io/rgee/reference/ee_Initialize.html</a>.</p>
+<pre class="r"><code>rgee::ee_Initialize(email = &quot;bevingtona&quot;, drive = T)</code></pre>
+<p>Define your area of interest as an <code>sf</code> polygon. In the commented code below, I use the <code>mapedit</code> package to digitize an <code>aoi</code>, then I save it locally to reproduce the workflow later on. The polygon is then loaded to Earth Engine. There are many ways to do this step.</p>
+<p><em>Pro tip #1: Keep the polygon simple, ideally just a rectangle.</em> <em>Pro tip #2: The larger the polygon, the slower the workflow, start small!</em></p>
+<pre class="r"><code>aoi &lt;- mapedit::editMap() #create AOI
+project_name &lt;- &quot;random_mine&quot; #unique name for the project
+write_sf(aoi, paste0(project_name,&quot;.gpkg&quot;)) #write aoi locally
+aoi &lt;- read_sf(paste0(project_name,&quot;.gpkg&quot;)) #read from local
+aoi_ee &lt;- rgee::sf_as_ee(aoi)$geometry() # convert aoi to earth engine object
+Map$centerObject(aoi_ee) #centre map to aoi
+Map$addLayer(aoi_ee) #plot aoi from earth engine</code></pre>
+<p>Here we set up the project with key variables for the rest of the script. Most are intuitive, but I’ve added some comments to help explain.</p>
+<pre class="r"><code>startYear = 1985
+endYear = 2017
+startDay = &#39;06-20&#39;
+endDay = &#39;09-20&#39;
+index = &#39;NBR&#39;
+maskThese = c(&#39;cloud&#39;, &#39;shadow&#39;)
+
+runParams = c(
+  maxSegments=           6,
+  spikeThreshold=        0.9,
+  vertexCountOvershoot=  3,
+  preventOneYearRecovery=T,
+  recoveryThreshold=     0.25,
+  pvalThreshold=         0.05,
+  bestModelProportion=   0.75,
+  minObservationsNeeded= 6)
+
+changeParams = c(
+  delta=  &#39;loss&#39;,
+  sort=   &#39;greatest&#39;,
+  year=   c(checked=T, start=1986, end=2017),
+  mag=    c(checked=T, value=200,  operator=&#39;&gt;&#39;),
+  dur=    c(checked=T, value=4,    operator=&#39;&lt;&#39;),
+  preval= c(checked=T, value=300,  operator=&#39;&gt;&#39;),
+  mmu=    c(checked=T, value=11))
+
+changeParams.index = index
+
+// run landtrendr
+lt = ltgee.runLT(startYear, endYear, startDay, endDay, aoi, index, [], runParams, maskThese)
+
+// get the change map layers
+changeImg = ltgee.getChangeMap(lt, changeParams)
+
+// set visualization dictionaries
+palette = [&#39;#9400D3&#39;, &#39;#4B0082&#39;, &#39;#0000FF&#39;, &#39;#00FF00&#39;, &#39;#FFFF00&#39;, &#39;#FF7F00&#39;, &#39;#FF0000&#39;]
+yodVizParms = {
+  min: startYear,
+  max: endYear,
+  palette: palette
+}
+
+magVizParms = {
+  min: 200,
+  max: 800,
+  palette: palette
+}
+
+// display the change attribute map - note that there are other layers - print changeImg to console to see all
+Map.centerObject(aoi, 11)
+Map.addLayer(changeImg.select([&#39;mag&#39;]), magVizParms, &#39;Magnitude of Change&#39;)
+Map.addLayer(changeImg.select([&#39;yod&#39;]), yodVizParms, &#39;Year of Detection&#39;)
+
+// export change data to google drive
+region = aoi.buffer(100000).bounds()
+exportImg = changeImg.clip(region).unmask(0).short()
+Export.image.toDrive({
+  image: exportImg, 
+  description: &#39;lt-gee_disturbance_map&#39;, 
+  folder: &#39;lt-gee_disturbance_map&#39;, 
+  fileNamePrefix: &#39;lt-gee_disturbance_map&#39;, 
+  region: region, 
+  scale: 30, 
+  crs: &#39;EPSG:5070&#39;, 
+  maxPixels: 1e13
+})</code></pre>
+<pre class="r"><code>resolution &lt;- 30 # Imagery and DEM resolution in m
+cloud &lt;- 10 # Landsat metadata cloud cover threshold 
+monthStart &lt;- 7 # filter months included in mosaics. 
+monthEnd &lt;- 9 # filter months included in mosaics.
+yearStart &lt;- 1985 # filter year included in mosaics.
+yearEnd &lt;- 2020 # filter year included in mosaics.
+yearWindow &lt;- 2 # if 0 mosaics are for 1 year, if 1 then for +- 1 year
+yearInterval &lt;- 1 # if 1 then mosaic every year, if 10 then every 10 years. 
+years &lt;- seq(yearStart, yearEnd, yearInterval)
+cloudBuffer &lt;- 3000 # cloud buffer distance in m
+gdrive &lt;- &quot;E:/Google Drive/&quot; # location of google drive locally for files to sync
+
+outfolder_name &lt;- paste( #this is the folder where ALL data will be stored
+  project_name,
+  resolution, 
+  cloud,
+  monthStart,
+  monthEnd,
+  yearStart,
+  yearEnd,
+  yearInterval,
+  yearWindow,
+  cloudBuffer,
+  sep = &quot;_&quot;
+)</code></pre>
+</div>
+<div id="rgee" class="section level1" number="2">
+<h1 number="2"><span class="header-section-number">2</span> RGEE</h1>
+<p>The goal of using <code>Google Earth Engine</code> is to quickly make annual cloud-free mosaics and clip them to our area of interest. The script assumes that you use “Backup and Sync” from Google to automatically sync your Google Drive to your desktop. There are many ways to do this step, this is just one way!</p>
+<div id="landsat-functions" class="section level2" number="2.1">
+<h2 number="2.1"><span class="header-section-number">2.1</span> Landsat functions</h2>
+<pre class="r"><code># Function to scale Surface Reflectance values
+srScale = function(img) {
+  img$addBands(img$select(c(
+    &#39;blue&#39;, &#39;green&#39;, &#39;red&#39;, &#39;nir&#39;, &#39;swir1&#39;, &#39;swir2&#39;
+  ))$multiply(0.0001))$addBands(img$select(c(&#39;tir&#39;))$multiply(0.1))$select(
+    c(&#39;blue_1&#39;,&#39;green_1&#39;,&#39;red_1&#39;,&#39;nir_1&#39;,&#39;swir1_1&#39;,&#39;swir2_1&#39;,&#39;tir_1&#39;),
+    c(&#39;blue&#39;, &#39;green&#39;, &#39;red&#39;, &#39;nir&#39;, &#39;swir1&#39;, &#39;swir2&#39;, &#39;tir&#39;)
+  )
+}
+
+# Function to remove saturated values
+radiometric = function(img) {
+  blue = img$select(&#39;blue&#39;)$eq(2)
+  blueAdd = img$select(&#39;blue&#39;)$subtract(blue)
+  green = img$select(&#39;green&#39;)$eq(2)
+  greenAdd = img$select(&#39;green&#39;)$subtract(green)
+  red = img$select(&#39;red&#39;)$eq(2)
+  redAdd = img$select(&#39;red&#39;)$subtract(red)
+  img$addBands(blueAdd)$addBands(greenAdd)$addBands(redAdd)$select(
+    c(&#39;blue_1&#39;, &#39;green_1&#39;, &#39;red_1&#39;, &#39;nir&#39;, &#39;swir1&#39;, &#39;swir2&#39;, &#39;tir&#39;),ST_NAMES)
+}
+
+# Function to apply cloud mask and buffer based on NDCI.
+cloudMask = function(img) {
+  temp  = img$addBands(img$select(&#39;tir&#39;)$unitScale(240, 270))
+  temp  = temp$addBands(temp$normalizedDifference(c(&#39;tir_1&#39;, &#39;swir2&#39;))$rename(&#39;ndci&#39;))
+  temp  = temp$addBands(temp$select(&#39;ndci&#39;)$lte(0.4)$rename(&#39;ndciT&#39;))
+  mask  = temp$select(&#39;ndciT&#39;)$fastDistanceTransform(51, &#39;pixels&#39;, &#39;squared_euclidean&#39;)$
+    sqrt()$multiply(ee$Image$pixelArea()$sqrt())$gt(cloudBuffer)
+  img$updateMask(mask)
+}</code></pre>
+</div>
+<div id="sr-collections" class="section level2" number="2.2">
+<h2 number="2.2"><span class="header-section-number">2.2</span> SR collections</h2>
+<pre class="r"><code># Load collections
+L4SR1 &lt;- ee$ImageCollection(&#39;LANDSAT/LT04/C01/T1_SR&#39;)
+L5SR1 &lt;- ee$ImageCollection(&#39;LANDSAT/LT05/C01/T1_SR&#39;)
+L7SR1v1 &lt;- ee$ImageCollection(&#39;LANDSAT/LE07/C01/T1_SR&#39;)$
+  filterDate(&#39;1999-01-01&#39;, &#39;2003-01-01&#39;)
+L7SR1v2 &lt;- ee$ImageCollection(&#39;LANDSAT/LE07/C01/T1_SR&#39;)$
+  filterDate(&#39;2012-01-01&#39;, &#39;2013-01-01&#39;)
+L8SR1 &lt;- ee$ImageCollection(&#39;LANDSAT/LC08/C01/T1_SR&#39;)
+
+# Load bands
+LT_BANDS &lt;- c(&#39;B1&#39;, &#39;B2&#39;, &#39;B3&#39;, &#39;B4&#39;, &#39;B5&#39;, &#39;B7&#39;, &#39;B6&#39;)
+LE_BANDS &lt;- c(&#39;B1&#39;, &#39;B2&#39;, &#39;B3&#39;, &#39;B4&#39;, &#39;B5&#39;, &#39;B7&#39;, &#39;B6&#39;)
+LC_BANDS &lt;- c(&#39;B2&#39;, &#39;B3&#39;, &#39;B4&#39;, &#39;B5&#39;, &#39;B6&#39;, &#39;B7&#39;, &#39;B10&#39;)
+ST_NAMES &lt;- c(&#39;blue&#39;, &#39;green&#39;, &#39;red&#39;, &#39;nir&#39;, &#39;swir1&#39;, &#39;swir2&#39;, &#39;tir&#39;)
+
+# Merge collections and pre-process images
+col = L4SR1$select(LT_BANDS, ST_NAMES)$merge(
+      L5SR1$select(LT_BANDS, ST_NAMES))$merge(
+      L7SR1v1$select(LE_BANDS, ST_NAMES))$merge(
+      L7SR1v2$select(LE_BANDS, ST_NAMES))$merge(
+      L8SR1$select(LC_BANDS, ST_NAMES))$
+  filterBounds(aoi_ee)$filterMetadata(&#39;CLOUD_COVER&#39;, &#39;less_than&#39;, cloud)$
+  filter(ee$Filter$calendarRange(yearStart, yearEnd, &quot;year&quot;))$
+  filter(ee$Filter$calendarRange(monthStart, monthEnd, &quot;month&quot;))$
+  map(srScale)$
+  map(radiometric)$
+  map(cloudMask)
+
+# Set Viz params, for visualization and export
+vizParams &lt;-
+  list(bands = c(&quot;swir1&quot;, &quot;nir&quot;, &quot;red&quot;),
+       min = 0,
+       max = 0.4)</code></pre>
+</div>
+<div id="download-mosaics" class="section level2" number="2.3">
+<h2 number="2.3"><span class="header-section-number">2.3</span> Download mosaics</h2>
+<pre class="r"><code># Loop all years
+out &lt;- lapply(years, function(year) {
+  print(year)
+  
+  # Filter Landsat collection to range of years
+  col_yr &lt;- col$filter(ee$Filter$calendarRange(year - yearWindow,
+                                               year + yearWindow,
+                                               &quot;year&quot;))
+  # Median Pixel Value
+  col_yr_median &lt;- col_yr$median()
+  
+  # Apply the vizParams to the image
+  col_yr_median_rgb &lt;- do.call(col_yr_median$visualize, vizParams)
+  
+  # Export
+  task &lt;- ee$batch$Export$image(
+    image = col_yr_median_rgb,
+    description = paste0(project_name, &quot;_LS_&quot;, year),
+    config = list(
+      scale = resolution,
+      maxPixels = 1.0E13,
+      crs = col$first()$projection()$crs()$getInfo(),
+      driveFolder = outfolder_name,
+      region = aoi_ee
+      )
+    )
+  task$start()
+  return(year)
+  })</code></pre>
+</div>
+<div id="download-dem" class="section level2" number="2.4">
+<h2 number="2.4"><span class="header-section-number">2.4</span> Download DEM</h2>
+<p>SRTM is only available above 60°S and below 60°N. If you are wanting to run this outside of the DEM domain, please modify the code to use another dataset.</p>
+<pre class="r"><code>mydem &lt;- ee$Image(&quot;USGS/SRTMGL1_003&quot;)
+task &lt;- ee$batch$Export$image(
+  image = mydem,
+  description = paste0(project_name, &quot;_DEM_SRTM&quot;),
+  config = list(
+    scale = resolution,
+    maxPixels = 1.0E13,
+    crs = col$first()$projection()$crs()$getInfo(),
+    driveFolder = outfolder_name,
+    region = aoi_ee
+    )
+  )</code></pre>
+</div>
+</div>
+<div id="wait-10ish-min" class="section level1" number="3">
+<h1 number="3"><span class="header-section-number">3</span> Wait 10ish min</h1>
+<p>WAITING GAME for files to sync locally. There are ways around this with <code>ee_as_raster</code>, but that is not part of this tutorial.</p>
+</div>
+<div id="interpolate-missing-data" class="section level1" number="4">
+<h1 number="4"><span class="header-section-number">4</span> Interpolate missing data</h1>
+<p>We interpolate missing data using the <code>forecast</code> package.</p>
+<div id="inspect-tifs" class="section level2" number="4.1">
+<h2 number="4.1"><span class="header-section-number">4.1</span> Inspect tifs</h2>
+<pre class="r"><code># LIST OF LANDSAT FILES
+files_LS &lt;- list.files(paste0(gdrive, outfolder_name), 
+                       full.names = T,
+                       pattern = &quot;_LS_&quot;)
+
+# REDIMENSION THE ENTIRE LIST TO MAKE A PLOT
+rgb_LS &lt;- read_stars(files_LS) %&gt;% 
+  st_rgb() %&gt;% 
+  st_redimension() 
+
+rgb_LS &lt;- rgb_LS %&gt;% 
+  st_set_dimensions(3, as.character(years))
+
+rgb_LS %&gt;% plot()</code></pre>
+<p><img src="images/timeseries_raw_landsat.png" /> In the figure above, we see black spots. These are no data pixels.</p>
+</div>
+<div id="impute-missing-data" class="section level2" number="4.2">
+<h2 number="4.2"><span class="header-section-number">4.2</span> Impute missing data</h2>
+<pre class="r"><code># Create output directory 
+dir.create(paste0(gdrive,outfolder_name,&quot;/gap_fill&quot;))
+
+# Make a list of the images to interpolate
+files_LS &lt;-list.files(paste0(gdrive, outfolder_name),
+             full.names = T,
+             pattern = &quot;_LS_&quot;)
+
+# Define impute function
+my_func_ma &lt;- function(vals) {
+  vals[vals==0] &lt;- NA
+  if(sum(is.na(vals))&lt;25){
+    return(as.numeric(forecast::na.interp(vals)))
+    }else{
+      return(vals)}}
+
+# One band at a time, stack all images of the timeseries and impute. 
+slow_impute &lt;- function(band_no){
+  
+  # READ STACK PER BAND
+  band_stack &lt;- read_stars(files_LS)[,,,band_no, drop = T] %&gt;%
+    st_redimension() 
+  write_stars(band_stack, paste0(gdrive,outfolder_name,&quot;/gap_fill/band&quot;,band_no,&quot;_raw.tif&quot;))
+  # SMOOTH STACK
+  band_stack_ma &lt;- st_apply(band_stack,
+                            MARGIN = c(&quot;x&quot;, &quot;y&quot;),
+                            FUN = my_func_ma) %&gt;%
+    st_set_dimensions(which = 1,
+                      values = as.character(years),
+                      names = &quot;year&quot;)
+  # WRITE OUTPUT
+  write_stars(band_stack_ma, paste0(gdrive,outfolder_name,&quot;/gap_fill/band&quot;,band_no,&quot;_smooth.tif&quot;))
+  return(band_no)}
+
+# RUN THIS IN PARALLEL
+plan(multicore)
+bands &lt;- 1:3
+band_test &lt;- future_lapply(bands, slow_impute)</code></pre>
+</div>
+<div id="combine-into-rgb-images" class="section level2" number="4.3">
+<h2 number="4.3"><span class="header-section-number">4.3</span> Combine into RGB images</h2>
+<pre class="r"><code># list of the three raster stacks (1 per band) that have been imputed
+f &lt;- list.files(paste0(gdrive,outfolder_name,&quot;/gap_fill/&quot;), pattern = &quot;_smooth.tif&quot;, full.names = T)
+
+bands &lt;- 1:length(years)
+
+plan(multisession)
+
+# for each band (i.e. year) join into RGB and write
+rgb_creator &lt;- function(j){
+  i &lt;- read_stars(f[1])[,,,j, drop = T]
+  names(i) &lt;- &quot;swir1&quot;
+  i$nir &lt;- read_stars(f[2])[,,,j,drop = T]
+  i$red &lt;- read_stars(f[3])[,,,j,drop = T]
+  i &lt;- i %&gt;% st_redimension()
+  write_stars(i, paste0(gdrive,outfolder_name,&quot;/gap_fill/&quot;,years[j],&quot;_final.tif&quot;))
+  return(j)}
+
+# Run in par
+band_test &lt;- future_lapply(bands, rgb_creator)</code></pre>
+</div>
+</div>
+<div id="i-can-rayshade-and-so-can-you" class="section level1" number="5">
+<h1 number="5"><span class="header-section-number">5</span> I can <code>rayshade</code> and so can you!</h1>
+<p>You might need to tinker with the settings to get the best view of your site. Section title inspired from: <a href="https://wcmbishop.github.io/rayshader-demo/" class="uri">https://wcmbishop.github.io/rayshader-demo/</a></p>
+<pre class="r"><code>dir.create(paste0(gdrive,outfolder_name,&quot;/rayshader_out/&quot;), showWarnings = F)
+
+# LIST LANDSAT FILES 
+files_LS &lt;- list.files(paste0(gdrive, outfolder_name,&quot;/gap_fill/&quot;),
+                       full.names = T,
+                       pattern = &quot;_final.tif&quot;)
+
+# LIST DEM FILE
+files_DEM &lt;- list.files(paste0(gdrive, outfolder_name),
+                        full.names = T,
+                        pattern = &quot;_DEM_&quot;)
+
+# LOAD DEM 
+dem &lt;- raster::raster(files_DEM)
+dem_matrix = rayshader::raster_to_matrix(dem, verbose = F)
+
+# LOOP RAYSHADER FOR ALL YEARS
+
+lapply(years, function(year){
+  
+  img &lt;- raster::stack(files_LS[grep(paste0(year,&quot;_final.tif&quot;), files_LS)])
+  
+  names(img) = c(&quot;r&quot;, &quot;g&quot;, &quot;b&quot;)
+  
+  img_r = rayshader::raster_to_matrix(img$r, verbose = F)
+  img_g = rayshader::raster_to_matrix(img$g, verbose = F)
+  img_b = rayshader::raster_to_matrix(img$b, verbose = F)
+  
+  
+  img_array = array(0, dim = c(nrow(img_r), ncol(img_r), 3))
+  
+  img_array[, , 1] = img_r / 255
+  img_array[, , 2] = img_g / 255
+  img_array[, , 3] = img_b / 255
+  
+  img_array = aperm(img_array, c(2, 1, 3))
+
+  temp &lt;- plot_3d(
+    img_array,
+    dem_matrix,
+    windowsize = c(2000,2000),
+    zscale = 20, # bigger is flatter
+    baseshape = &quot;rectangle&quot;,
+    solid = TRUE,
+    soliddepth = &quot;auto&quot;,
+    solidcolor = &quot;black&quot;,
+    solidlinecolor = &quot;black&quot;,
+    shadow = F,
+    theta = 40, # SOUTH = 180
+    phi = 30, # NADIR = 90
+    fov = 60, #100 = fish-eye
+    zoom = 0.8, # small = close
+    background = &quot;black&quot;
+  )
+
+render_snapshot(
+  filename = paste0(gdrive,outfolder_name,&quot;/rayshader_out/&quot;,year,&quot;.png&quot;),
+  title_text = year,
+  title_bar_color = &quot;black&quot;,
+  title_size = 2000*0.1,
+  title_color = &quot;white&quot;,
+  title_position = &quot;north&quot;,
+  title_bar_alpha = 1
+)
+
+rgl::rgl.close()
+})</code></pre>
+<p><img src="../images/1988.png" /></p>
+</div>
+<div id="i-can-gifski-and-so-can-you" class="section level1" number="6">
+<h1 number="6"><span class="header-section-number">6</span> I can <code>gifski</code> and so can you!</h1>
+<div id="in-3d" class="section level2" number="6.1">
+<h2 number="6.1"><span class="header-section-number">6.1</span> In 3D</h2>
+<p>The <code>gifski</code> package is crazy fast, especially compared to <code>magick</code>..</p>
+<pre class="r"><code># Make an output file
+dir.create(paste0(gdrive,outfolder_name,&quot;/gif_out/&quot;))
+
+# List of 3D png&#39;s
+png_files &lt;- list.files(paste0(gdrive,outfolder_name,&quot;/rayshader_out/&quot;), full.names = T)
+
+# Out gif
+gif_file &lt;- paste0(paste0(gdrive,outfolder_name,&quot;/animation3d.gif&quot;))
+
+# Animate
+gifski(png_files, gif_file,
+       width = ncol(png::readPNG(png_files[1])),
+       height = nrow(png::readPNG(png_files[1])),
+       delay = 0.1,
+       loop = TRUE,
+       progress = TRUE)</code></pre>
+<p><img src="images/animation.gif" /></p>
+</div>
+<div id="or-keep-it-2d" class="section level2" number="6.2">
+<h2 number="6.2"><span class="header-section-number">6.2</span> Or keep it <code>2D</code></h2>
+<pre class="r"><code>dir.create(paste0(gdrive,outfolder_name,&quot;/2Dtemp/&quot;))
+
+# List tifs
+tif_files &lt;- list.files(paste0(gdrive,outfolder_name,&quot;/gap_fill/&quot;), full.names = T, pattern = &quot;final&quot;)
+
+# Write png from tif
+plan(multisession)
+png_files &lt;- future_lapply(years, function(year){
+  out_name &lt;- paste0(gdrive,outfolder_name,&quot;/2Dtemp/&quot;, year, &quot;v2.png&quot;)
+  png(filename = out_name, width = 2000, height = 2000)
+  read_stars(paste0(gdrive,outfolder_name,&quot;/gap_fill/&quot;,year,&quot;_final.tif&quot;)) %&gt;% 
+    plot(main = &quot;&quot;, rgb = 1:3) 
+  dev.off()
+  return(out_name)})
+
+# Animate 
+gif_file &lt;- paste0(paste0(gdrive,outfolder_name,&quot;/animation2d.gif&quot;))
+gifski(unlist(png_files), gif_file,
+       width = ncol(png::readPNG(unlist(png_files)[1])),
+       height = nrow(png::readPNG(unlist(png_files)[1])),
+       delay = 0.1,
+       loop = TRUE,
+       progress = TRUE)</code></pre>
+<p><img src="images/animation2d.gif" /></p>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
