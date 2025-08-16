@@ -1,60 +1,52 @@
-name: "Alexandre R. Bevington"
+name: "Remote Watershed Lab"
 output_dir: "."
 navbar:
-  title: "Alexandre R. Bevington"
+  title: "Remote Watershed Lab"
   left:
     - text: "Research"
       menu: 
-      - text: "CV"
-        href: cv.html
-      - text: "Publications and Presentations"
+      - text: "Lab"
+        href: index.html
+      - text: "Publications"
         href: pubs.html
-      - text: "Current projects"
-        href: research.html
-    - text: "Code and stuff"
-      menu:
-      - text: "Using the `stars` package"
-        href: 20210329_stars.html  
-      - text: "3D timelapse from Landsat"
-        href: 20210504_rgee_rayshade_gifski.html
-      - text: "Download and animate Planet imagery"
-        href: 20210507_PlanetR_Timelapse.html
-      - text: "River profile tool for British Columbia"
-        href: 20210512_FWA_River_Profiles.html
-      # - text: "Rayshade Gifski"
-      #   href: 20210602_rgee_lt_rayshade_gifski.html
-      - text: "Sentinel-3 Land Surface Temperature"
-        href: 20210702_getspatialdata_sentinel3.html
-      
-      # - text: "SubMenu"
-      #   menu:
-      #   - text: "Item1"
-      #   href: index2.html 
-      #   - text: "Item2"
-      #     href: https://getbootstrap.com/docs/4.4/components/alerts/
-
-    # - text: "EO"
-    #   href: research.html
-    # - text: "Hydro"
-    #   href: research.html
-    # - text: "Cryo"
-    #   href: research.html
+    - text: "Teaching"
+      menu: 
+      - text: "Courses"
+        href: courses.html  
+      - text: "Workshops"
+        href: workshops.html
+      - text: "Code Vignettes"
+        menu:
+        - text: "Using the `stars` package"
+          href: vignettes/20210329_stars.html  
+        - text: "3D timelapse from Landsat"
+          href: vignettes/20210504_rgee_rayshade_gifski.html
+        - text: "Download and animate Planet imagery"
+          href: vignettes/20210507_PlanetR_Timelapse.html
+        - text: "River profile tool for British Columbia"
+          href: vignettes/20210512_FWA_River_Profiles.html
+        - text: "Rayshade Gifski"
+          href: vignettes/20210602_rgee_lt_rayshade_gifski.html
+        - text: "Sentinel-3 Land Surface Temperature"
+          href: vignettes/20210702_getspatialdata_sentinel3.html
+      - text: "Resources"
+        href: resources.html
+        
   right:
-    # - icon: fa-envelope fa-lg
-    #   href: contact.html
-    # - icon: ai-google-scholar ai-lg
-    #   href: https://scholar.google.com/citations?user=5SVDaREAAAAJ&hl=en
-    # - icon: ai-cv ai-lg
-      # href: ./files/Zabor_Emily_CV.pdf
-    - text: RG
+    - icon: fa-envelope fa-lg
+      href: mailto:alex.bevington@unbc.ca
+    - icon: ai-google-scholar ai-lg
+      href: https://scholar.google.com/citations?user=5SVDaREAAAAJ&hl=en
+    - icon: ai-researchgate ai-lg
       href: https://www.researchgate.net/profile/Alexandre-Bevington
-    - text: GitHub
+    - icon: fa-github fa-lg
       href: https://github.com/bevingtona
-    - text: Twitter
+    - icon: fa-twitter fa-lg
       href: https://twitter.com/abevingtona
-    - text: Linked-In
+    - icon: fa-linkedin fa-lg
       href: https://www.linkedin.com/in/bevingtona/
+
 output:
   html_document:
     theme: paper
-    css: 'styles.css'
+    css: styles.css

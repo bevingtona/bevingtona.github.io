@@ -11,7 +11,7 @@
 
 
 
-<title>RWL</title>
+<title>RWL - People</title>
 
 <script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -29,6 +29,9 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -222,6 +225,75 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+}
+
+</style>
+
+
 
 </head>
 
@@ -229,6 +301,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -348,72 +430,28 @@ $(document).ready(function () {
 
 
 
+<h1 class="title toc-ignore">People</h1>
 
 </div>
 
 
 <p><link rel="stylesheet" href="../styles.css" type="text/css">
 <link rel="stylesheet" href="../academicicons/css/academicons.min.css"/></p>
-<p><img src="images/2019-02-12_0029_circle.jpg" /></p>
-<p>Hello! My name is Alex. I am a tenure-track professor at the <a
-href="https://www.unbc.ca/department-geography-earth-and-environmental-sciences">University
-of Northern British Columbia</a>. My interests are wide-ranging, but are
-generally captured by the following themes: Hydrology, Cryosphere,
-Geography, and Earth Observation. Link them all together to make
-<em>HYDRO-CRYO-GEO-EO!</em></p>
-<p>I’ve started up a research lab called the “<u><strong>Remote
-Watershed Lab</strong></u>”. The motivation of the lab is to tackle
-wicked problems in the world and contribute to their solutions with
-science and research.</p>
-<div id="current-projects-and-themes" class="section level2">
-<h2>Current Projects and Themes</h2>
-<ul>
-<li><p><strong><em>RemoteLogger</em></strong> - Low-cost real-time data
-loggers<br />
-<a href="https://bcgov-env.shinyapps.io/nbchydro/"
-class="uri">https://bcgov-env.shinyapps.io/nbchydro/</a></p></li>
-<li><p><strong><em>watershedBC</em></strong> - A quick and easy tool to
-get watershed information in BC<br />
-<a href="https://bcgov-env.shinyapps.io/watershedBC/"
-class="uri">https://bcgov-env.shinyapps.io/watershedBC/</a></p></li>
-<li><p><strong>Climate and Land Cover Change Impacts on
-Watersheds</strong>: This project looks at creating the datasets
-required to answer critical questions thatt relate to the impact of
-climate and land cover on watersheds - from streamflow (floods and
-drought) to water quality (erosion, sediment, temperature). This project
-combines remote sensing from multiple sources to have time-dynamic
-nested watersheds for western Canada.</p></li>
-<li><p><strong>Rapidly Changing Cryosphere</strong>: The cryosphere of
-western Canada, including seasonal snow, glaciers, and permafrost, are
-rapidly changing. This project combines in-situ measurements with remote
-sensing observations and conceptual models to better understand the
-drivers and future directions of these changes.</p></li>
-<li><p><strong>Slope Stability Monitoring in BC with InSAR</strong>:
-Precursory motion to landslides is critically important to monitor in
-areas of high consequence. With new Synthetic Aperture Radar datasets
-(e.g. S1, RCM, and soon NISAR), new data pipelines and workflows will be
-needed to generate high quality multi-temporal, and near-real-time slope
-stability assessments.</p></li>
-<li><p><strong>Water temperature</strong>: The temperature of water in
-freshwater systems is a controlling factor on much of the aquatic world,
-including fish. Combining in-situ water temperature data with thermal
-remote sensing and modelling is important for better understanding what
-future freshwater systems may look like.</p></li>
-<li><p><strong>Integrated Remote Sensing Analysis</strong>: This lab
-takes on a wide variety of remote sensing projects. From time-series
-analysis, to image classification, and multisensor fusion models. Some
-notable projects include novel methods for generating cloud-free
-mosaics, investigating forest attributes, and detecting human impacts
-over time.</p></li>
-</ul>
+<div id="students" class="section level1">
+<h1>Students</h1>
 </div>
-<div id="lab-members" class="section level2">
-<h2>Lab Members</h2>
+<div id="faculty" class="section level1">
+<h1>Faculty</h1>
 <p>Alex Bevington, PhD, PAg, Associate Professor</p>
 </div>
+<div id="collaborators" class="section level1">
+<h1>Collaborators</h1>
+</div>
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -446,6 +484,35 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

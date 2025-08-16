@@ -1,0 +1,23 @@
+---
+title: "People"
+pagetitle: "RWL - People"
+output:
+  html_document:
+    toc: true
+    number_sections: false
+    toc_float: 
+      collapsed: false
+      smooth_scroll: true
+---
+
+<link rel="stylesheet" href="../styles.css" type="text/css">
+<link rel="stylesheet" href="../academicicons/css/academicons.min.css"/>
+
+# Students 
+
+# Faculty
+
+Alex Bevington, PhD, PAg, Associate Professor
+
+# Collaborators 
+

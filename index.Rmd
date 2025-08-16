@@ -1,10 +1,37 @@
 ---
-title: " "
-pagetitle: "Alexandre R. Bevington"
+title: ""
+pagetitle: "RWL"
+output:
+  html_document:
+    toc: false
 ---
 
-<link rel="stylesheet" href="styles.css" type="text/css"> <link rel="stylesheet" href="academicicons/css/academicons.min.css"/>
+<link rel="stylesheet" href="../styles.css" type="text/css"> <link rel="stylesheet" href="../academicicons/css/academicons.min.css"/>
 
 ![](images/2019-02-12_0029_circle.jpg)
 
-This website serves as a general purpose CV and is somewhere that I can share progress and thoughts on Earth Observation (EO), Hydrology (Hydro), Cryosphere (Cryo) and Geoscience (Geo).
+Hello! My name is Alex. I am a tenure-track professor at the [University of Northern British Columbia](https://www.unbc.ca/department-geography-earth-and-environmental-sciences). My interests are wide-ranging, but are generally captured by the following themes: Hydrology, Cryosphere, Geography, and Earth Observation. Link them all together to make *HYDRO-CRYO-GEO-EO!*
+
+I've started up a research lab called the "[**Remote Watershed Lab**]{.underline}". The motivation of the lab is to tackle wicked problems in the world and contribute to their solutions with science and research.
+
+## Current Projects and Themes
+
+-   ***RemoteLogger*** - Low-cost real-time data loggers\
+    <https://bcgov-env.shinyapps.io/nbchydro/>
+
+-   ***watershedBC*** - A quick and easy tool to get watershed information in BC\
+    <https://bcgov-env.shinyapps.io/watershedBC/>
+
+-   **Climate and Land Cover Change Impacts on Watersheds**: This project looks at creating the datasets required to answer critical questions thatt relate to the impact of climate and land cover on watersheds - from streamflow (floods and drought) to water quality (erosion, sediment, temperature). This project combines remote sensing from multiple sources to have time-dynamic nested watersheds for western Canada.
+
+-   **Rapidly Changing Cryosphere**: The cryosphere of western Canada, including seasonal snow, glaciers, and permafrost, are rapidly changing. This project combines in-situ measurements with remote sensing observations and conceptual models to better understand the drivers and future directions of these changes.
+
+-   **Slope Stability Monitoring in BC with InSAR**: Precursory motion to landslides is critically important to monitor in areas of high consequence. With new Synthetic Aperture Radar datasets (e.g. S1, RCM, and soon NISAR), new data pipelines and workflows will be needed to generate high quality multi-temporal, and near-real-time slope stability assessments.
+
+-   **Water temperature**: The temperature of water in freshwater systems is a controlling factor on much of the aquatic world, including fish. Combining in-situ water temperature data with thermal remote sensing and modelling is important for better understanding what future freshwater systems may look like.
+
+-   **Integrated Remote Sensing Analysis**: This lab takes on a wide variety of remote sensing projects. From time-series analysis, to image classification, and multisensor fusion models. Some notable projects include novel methods for generating cloud-free mosaics, investigating forest attributes, and detecting human impacts over time.
+
+## Lab Members
+
+Alex Bevington, PhD, PAg, Associate Professor
