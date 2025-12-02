@@ -60,7 +60,6 @@ if (window.hljs) {
 
 
 
-
 <link rel="stylesheet" href="styles.css" type="text/css" />
 
 
@@ -85,9 +84,6 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
-}
-details > summary > p:only-child {
-  display: inline;
 }
 details > summary > p:only-child {
   display: inline;
@@ -157,15 +153,6 @@ $(document).ready(function () {
     menuAnchor.parent().addClass('active');
     dropdown.addClass('active');
   }
-  // mark the anchor link active (and if it's in a dropdown, also mark that active)
-  var dropdown = menuAnchor.closest('li.dropdown');
-  if (window.bootstrap) { // Bootstrap 4+
-    menuAnchor.addClass('active');
-    dropdown.find('> .dropdown-toggle').addClass('active');
-  } else { // Bootstrap 3
-    menuAnchor.parent().addClass('active');
-    dropdown.addClass('active');
-  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -196,8 +183,6 @@ $(document).ready(function () {
 
 .tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
   content: "\e259";
-.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -205,8 +190,6 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "\e258";
-  font-family: 'Glyphicons Halflings';
   content: "\e258";
   font-family: 'Glyphicons Halflings';
   border: none;
@@ -254,7 +237,6 @@ $(document).ready(function () {
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -265,7 +247,6 @@ $(document).ready(function () {
       <ul class="nav navbar-nav">
         <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Research
      
     <span class="caret"></span>
@@ -273,17 +254,17 @@ $(document).ready(function () {
   <ul class="dropdown-menu" role="menu">
     <li>
       <a href="index.html">Lab</a>
+    </li>
+    <li class="dropdown-header">Publications</li>
+    <li>
       <a href="index.html">Lab</a>
     </li>
     <li>
-      <a href="pubs.html">Publications</a>
       <a href="pubs.html">Publications</a>
     </li>
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Teaching
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Teaching
      
@@ -310,10 +291,12 @@ $(document).ready(function () {
   </a>
 </li>
 <li>
-  <a href="https://www.researchgate.net/profile/Alexandre-Bevington">
+  <a>
     <span class="ai ai-researchgate ai-lg"></span>
      
   </a>
+</li>
+<li>
   <a href="mailto:alex.bevington@unbc.ca">
     <span class="fa fa-envelope fa-lg"></span>
      
@@ -336,26 +319,14 @@ $(document).ready(function () {
     <span class="fa fa-github fa-lg"></span>
      
   </a>
-  <a href="https://github.com/bevingtona">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
 </li>
 <li>
   <a href="https://twitter.com/abevingtona">
     <span class="fa fa-twitter fa-lg"></span>
      
   </a>
-  <a href="https://twitter.com/abevingtona">
-    <span class="fa fa-twitter fa-lg"></span>
-     
-  </a>
 </li>
 <li>
-  <a href="https://www.linkedin.com/in/bevingtona/">
-    <span class="fa fa-linkedin fa-lg"></span>
-     
-  </a>
   <a href="https://www.linkedin.com/in/bevingtona/">
     <span class="fa fa-linkedin fa-lg"></span>
      
@@ -375,8 +346,8 @@ $(document).ready(function () {
 
 
 <p><link rel="stylesheet" href="../styles.css" type="text/css">
-<link rel="stylesheet" href="../academicicons/css/academicons.min.css"/></p>
-<p><link rel="stylesheet" href="../styles.css" type="text/css">
+<link rel="stylesheet" href="../academicicons/css/academicons.min.css"/>
+<link rel="stylesheet" href="../styles.css" type="text/css">
 <link rel="stylesheet" href="../academicicons/css/academicons.min.css"/></p>
 <p><img src="images/2019-02-12_0029_circle.jpg" /></p>
 <p>Hello! My name is Alex. I am a tenure-track lecturer at the <a

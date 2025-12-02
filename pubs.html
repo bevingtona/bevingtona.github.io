@@ -30,7 +30,6 @@
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
 <script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
-<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
@@ -64,7 +63,6 @@ if (window.hljs) {
 
 
 
-
 <link rel="stylesheet" href="styles.css" type="text/css" />
 
 
@@ -89,9 +87,6 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
-}
-details > summary > p:only-child {
-  display: inline;
 }
 details > summary > p:only-child {
   display: inline;
@@ -161,15 +156,6 @@ $(document).ready(function () {
     menuAnchor.parent().addClass('active');
     dropdown.addClass('active');
   }
-  // mark the anchor link active (and if it's in a dropdown, also mark that active)
-  var dropdown = menuAnchor.closest('li.dropdown');
-  if (window.bootstrap) { // Bootstrap 4+
-    menuAnchor.addClass('active');
-    dropdown.find('> .dropdown-toggle').addClass('active');
-  } else { // Bootstrap 3
-    menuAnchor.parent().addClass('active');
-    dropdown.addClass('active');
-  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -200,8 +186,6 @@ $(document).ready(function () {
 
 .tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
   content: "\e259";
-.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -209,8 +193,6 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "\e258";
-  font-family: 'Glyphicons Halflings';
   content: "\e258";
   font-family: 'Glyphicons Halflings';
   border: none;
@@ -337,7 +319,6 @@ div.tocify {
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -348,7 +329,6 @@ div.tocify {
       <ul class="nav navbar-nav">
         <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Research
      
     <span class="caret"></span>
@@ -356,17 +336,17 @@ div.tocify {
   <ul class="dropdown-menu" role="menu">
     <li>
       <a href="index.html">Lab</a>
+    </li>
+    <li class="dropdown-header">Publications</li>
+    <li>
       <a href="index.html">Lab</a>
     </li>
     <li>
-      <a href="pubs.html">Publications</a>
       <a href="pubs.html">Publications</a>
     </li>
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Teaching
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Teaching
      
@@ -393,10 +373,12 @@ div.tocify {
   </a>
 </li>
 <li>
-  <a href="https://www.researchgate.net/profile/Alexandre-Bevington">
+  <a>
     <span class="ai ai-researchgate ai-lg"></span>
      
   </a>
+</li>
+<li>
   <a href="mailto:alex.bevington@unbc.ca">
     <span class="fa fa-envelope fa-lg"></span>
      
@@ -419,26 +401,14 @@ div.tocify {
     <span class="fa fa-github fa-lg"></span>
      
   </a>
-  <a href="https://github.com/bevingtona">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
 </li>
 <li>
   <a href="https://twitter.com/abevingtona">
     <span class="fa fa-twitter fa-lg"></span>
      
   </a>
-  <a href="https://twitter.com/abevingtona">
-    <span class="fa fa-twitter fa-lg"></span>
-     
-  </a>
 </li>
 <li>
-  <a href="https://www.linkedin.com/in/bevingtona/">
-    <span class="fa fa-linkedin fa-lg"></span>
-     
-  </a>
   <a href="https://www.linkedin.com/in/bevingtona/">
     <span class="fa fa-linkedin fa-lg"></span>
      
@@ -453,7 +423,6 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Publications</h1>
 <h1 class="title toc-ignore">Publications</h1>
 
 </div>
@@ -633,6 +602,30 @@ and 7th Canadian Permafrost Conference, Quebec City, Canada.</em></li>
 <div id="presentations" class="section level1" number="4">
 <h1><span class="header-section-number">4</span> Presentations</h1>
 <ol style="list-style-type: decimal">
+<li>Brideau MA, <strong>AR Bevington</strong>, AG Lewkowicz and D Stead.
+2015. <a
+href="https://www.researchgate.net/publication/281939062_Engineering_Geology_Electrical_Resistivity_Tomography_and_Displacement_Monitoring_of_the_Dawson_City_Landslide_Yukon">Engineering
+geology,electrical resistivity tomography and displacement monitoring of
+the DawsonCity Landslide, Yukon</a>. <em>Proceedings of GEOQuebec 2015
+Geotechnical Conference and 7th Canadian Permafrost Conference, Quebec
+City, Canada.</em></li>
+<li>Smith SL, AG Lewkowicz, M Ednie, M Duguay and <strong>AR
+Bevington</strong>. 2015. <a
+href="https://www.researchgate.net/publication/312623215_Characterization_of_Permafrost_Thermal_State_in_the_Southern_Yukon">Characterization
+ofpermafrost thermal state in the southern Yukon</a>. <em>Proceedings of
+GEOQuebec 2015 Geotechnical Conference and 7th Canadian Permafrost
+Conference, Quebec City, Canada.</em></li>
+<li><strong>Bevington AR</strong> and AG Lewkowicz. 2015. <a
+href="https://www.researchgate.net/publication/282649555_Assessment_of_a_land_cover_driven_TTOP_model_for_mountain_and_lowland_permafrost_using_field_data_southern_Yukon_and_northern_British_Columbia_Canada">Assessment
+of a landcover driven TTOP-model for mountain and lowland permafrost
+using field data, southern Yukon and northern British Columbia,
+Canada</a>. <em>Proceedings of GEOQuebec 2015 Geotechnical Conference
+and 7th Canadian Permafrost Conference, Quebec City, Canada.</em></li>
+</ol>
+</div>
+<div id="presentations-1" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Presentations</h1>
+<ol style="list-style-type: decimal">
 <li><p><strong>Bevington AR</strong>. 2019. Reproducible workflows in
 satellite remote sensing. BC Government Data Science Community of
 Practice Demo Day, Victoria, BC.</p></li>
@@ -730,9 +723,6 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function ()  {
-
-    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
-    $('.unlisted.unnumbered').addClass('toc-ignore')
 
     // temporarily add toc-ignore selector to headers for the consistency with Pandoc
     $('.unlisted.unnumbered').addClass('toc-ignore')
