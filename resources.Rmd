@@ -1,0 +1,9 @@
+---
+title: "Resources"
+pagetitle: "RWL - Resources"
+output:
+  html_document:
+    toc: false
+---
+
+<link rel="stylesheet" href="../styles.css" type="text/css"> <link rel="stylesheet" href="../academicicons/css/academicons.min.css"/>

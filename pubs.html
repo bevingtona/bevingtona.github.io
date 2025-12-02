@@ -11,10 +11,10 @@
 
 
 
-<title>Alexandre R. Bevington</title>
+<title>GeoWS - Publications</title>
 
-<script src="site_libs/header-attrs-2.8/header-attrs.js"></script>
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.30/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -29,12 +29,14 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -55,6 +57,7 @@ if (window.hljs) {
   }
 }
 </script>
+
 
 
 
@@ -84,6 +87,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -141,11 +147,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -174,8 +184,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -183,16 +193,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -315,70 +318,79 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">Alexandre R. Bevington</a>
+      <a class="navbar-brand" href="index.html">Geospatial Watershed Lab</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Research
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="cv.html">CV</a>
+      <a href="index.html">Lab</a>
     </li>
     <li>
-      <a href="pubs.html">Publications and Presentations</a>
-    </li>
-    <li>
-      <a href="research.html">Current projects</a>
+      <a href="pubs.html">Publications</a>
     </li>
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Code and stuff
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Teaching
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="20210329_stars.html">Using the `stars` package</a>
-    </li>
-    <li>
-      <a href="20210504_rgee_rayshade_gifski.html">3D timelapse from Landsat</a>
-    </li>
-    <li>
-      <a href="20210507_PlanetR_Timelapse.html">Download and animate Planet imagery</a>
-    </li>
-    <li>
-      <a href="20210512_FWA_River_Profiles.html">River profile tool for British Columbia</a>
-    </li>
-    <li>
-      <a href="20210702_getspatialdata_sentinel3.html">Sentinel-3 Land Surface Temperature</a>
+      <a href="courses.html">Courses, Workshops and Events</a>
     </li>
   </ul>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://www.researchgate.net/profile/Alexandre-Bevington">RG</a>
+  <a href="mailto:alex.bevington@unbc.ca">
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="https://github.com/bevingtona">GitHub</a>
+  <a href="https://scholar.google.com/citations?user=5SVDaREAAAAJ&amp;hl=en">
+    <span class="ai ai-google-scholar ai-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="https://twitter.com/abevingtona">Twitter</a>
+  <a href="https://www.researchgate.net/profile/Alexandre-Bevington">
+    <span class="ai ai-researchgate ai-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="https://www.linkedin.com/in/bevingtona/">Linked-In</a>
+  <a href="https://github.com/bevingtona">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://twitter.com/abevingtona">
+    <span class="fa fa-twitter fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://www.linkedin.com/in/bevingtona/">
+    <span class="fa fa-linkedin fa-lg"></span>
+     
+  </a>
 </li>
       </ul>
     </div><!--/.nav-collapse -->
@@ -389,154 +401,242 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Publications and presentations</h1>
+<h1 class="title toc-ignore">Publications</h1>
 
 </div>
 
 
-<p><link rel="stylesheet" href="../styles.css" type="text/css"> <link rel="stylesheet" href="../academicicons/css/academicons.min.css"/></p>
-<p>Last updated 2021-07-02</p>
-<div id="publications" class="section level1" number="1">
-<h1 number="1"><span class="header-section-number">1</span> Publications</h1>
-<div id="peer-reviewed-publications" class="section level2" number="1.1">
-<h2 number="1.1"><span class="header-section-number">1.1</span> Peer-reviewed publications</h2>
+<p><link rel="stylesheet" href="../styles.css" type="text/css"></p>
+<p><link rel="stylesheet" href="../academicicons/css/academicons.min.css"/></p>
+<p>Last updated 2025-12-01</p>
+<div id="peer-reviewed-publications" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Peer-reviewed
+publications</h1>
 <ol style="list-style-type: decimal">
-<li><p><a href="https://doi.org/10.1080/07055900.2020.1845116">Classification of clustered snow off dates over British Columbia, Canada, from mean sea level pressure</a><br />
-Gleason, HG, <strong>AR Bevington</strong> and VN Foord. 2020.<br />
-Atmosphere-Ocean, 58, 333–350.</p></li>
-<li><p><a href="https://doi.org/10.1016/j.foreco.2020.118763">Regional moose (Alces alces) responses to forestry cutblocks are driven by landscape-scale patterns of vegetation composition and regrowth</a><br />
-Mumma, MA, MP Gillingham, S Marshall, C Procter, <strong>AR Bevington</strong> and M Scheideman. 2020.<br />
-Forest Ecology and Management, 481, 1–11.</p></li>
-<li><p><a href="https://doi.org/10.1038/s41598-019-56967-x">Near real-time wildfire progression monitoring with Sentinel-1 SAR time series and deep learning</a><br />
-Ban, Y, P Zhang, A Nascetti, <strong>AR Bevington</strong> and MA Wulder. 2020.<br />
-Scientific Reports, 10, 1322.</p></li>
-<li><p><a href="https://doi.org/10.1007/s10346-019-01292-7">Landslide response to the 27 October 2012 earthquake (MW 7.8), southern Haida Gwaii, British Columbia, Canada</a><br />
-Barth, S, M Geertsema, <strong>AR Bevington</strong>, AL Bird, JJ Clague, T Millard, PT Bobrowsky, A Hasler and H Liu. 2020.<br />
-Landslides, 17, 517–526.</p></li>
-<li><p><a href="https://doi.org/10.1016/j.jag.2019.101943">Semi-automated detection of landslide timing using harmonic modelling of satellite imagery, Buckinghorse River, Canada</a><br />
-Deijns, AAJ, <strong>AR Bevington</strong>, F van Zadelhoff, SM de Jong, M Geertsema and S McDougall. 2020.<br />
-International Journal of Applied Earth Observation and Geoinformation, 84, 101943.</p></li>
-<li><p><a href="https://doi.org/10.1038/s41558-020-0855-4">Rapid worldwide growth of glacial lakes since 1990</a><br />
-Shugar, DH, A Burr, UK Haritashya, JS Kargel, CS Watson, MC Kennedy, <strong>AR Bevington</strong>, RA Betts, S Harrison and K Strattman. 2020.<br />
-Nature Climate Change, 10, 939–945.</p></li>
-<li><p><a href="https://doi.org/10.1139/cgj-2019-0751">A cautionary note for rock avalanche field investigation – recent sequential and overlapping landslides in British Columbia</a><br />
-Geertsema M and AR Bevington. 2019.<br />
-Canadian Geotechnical Journal.</p></li>
-<li><p><a href="https://doi.org/10.5194/tc-13-2693-2019">Regional influence of ocean–atmosphere teleconnections on the timing and duration of MODIS-derived snow cover in British Columbia, Canada</a><br />
-<strong>Bevington AR</strong>, H Gleason, V Foord, H Griesbauer and WC Floyd. 2019.<br />
-The Cryosphere, 13, 2693–2712.</p></li>
-<li><p><a href="https://doi.org/10.1007/s10346-019-01199-3">Evolution of the 2014 Vulcan Creek landslide-dammed lake, Yukon, Canada, using field and remote survey techniques</a>.<br />
-Brideau MA, DH Shugar, <strong>AR Bevington</strong>, M Willis and C Wong. 2019.<br />
-Landslides, 16, 1823–1840.</p></li>
-<li><p><a href="https://doi.org/10.22230/jwsm.2018v2n2a18">A review of free optical satellite imagery for watershed scale landscape analysis</a><br />
-<strong>Bevington AR</strong>, H Gleason, X Giroux-Bougard and J de Jong. 2018.<br />
-Confluence: Journal of Watershed Science, 2, 1–22.</p></li>
-<li><p><a href="https://doi.org/10.1017/S0032247418000645">The Permafrost Young Researchers Network (PYRN) is getting older: The past, present, and future of our evolving community</a><br />
-Tanski G, H Bergstedt, <strong>AR Bevington</strong>, et al. 2019.<br />
-Polar Record. 1-4.</p></li>
-<li><p><a href="https://doi.org/10.26077/j5px-af63">Resource selection of free-ranging horses influenced by fire in northern Canada</a><br />
-Leverkus S, SD Fuhlendorf, M Geertsema, BD Allred, M Gregory, <strong>AR Bevington</strong>, DM Engle and JD Scasta. 2018.<br />
-Human–Wildlife Interactions 12, 85–101.</p></li>
-<li><p><a href="https://doi.org/10.1126/science.aac8353">Geomorphic and tectonic controls of geohazards induced by Nepal’s 2015Gorkha earthquake</a><br />
-Kargel JS, GJ Leonard ,DH Shugar, UK Haritashya, <strong>AR Bevington</strong>, et al. 2015.<br />
-Science, 351, 6269.</p></li>
-<li><p><a href="https://doi.org/10.1002/2014JF003351">Determination of warm, sensitive permafrost areas in near‐vertical rockwalls and evaluation of distributed models by electrical resistivity tomography</a><br />
-Magnin F, M Krautblatter, P Deline, L Ravanel, E Malet and <strong>AR Bevington</strong>. 2015.<br />
-Journal of Geophysical Research Earth Surface, 120, 745–762.</p></li>
-<li><p><a href="https://doi.org/10.3189/2014JoG13J134">Characteristics of the last five surges of Lowell Glacier, Yukon, Canada, since 1948</a><br />
-<strong>Bevington AR</strong> and L Copland. 2014.<br />
-Journal of Glaciology, 60, 219.</p></li>
+<li><p><strong>Bevington, AR</strong> and B Menounos. 2025. <a
+href="https://iopscience.iop.org/article/10.1088/1748-9326/adc9ca">Glaciers
+in western North America and Alaska experience exceptional rise of
+transient snowlines over the satellite era</a>. <em>Environmental
+Research Letters.</em></p></li>
+<li><p>Mumma, M, <strong>AR Bevington</strong>, S Marshall and M
+Gillingham. 2024. <a
+href="https://doi.org/10.1002/ecs2.4793">Delineating wildfire burns and
+regrowth using satellite imagery to assess moose (Alces) spatial
+responses to burns</a>. <em>Ecosphere.</em></p></li>
+<li><p>Herring, T, AG Lewkowicz, …, <strong>AR Bevington</strong>, ….
+2024. <a href="https://doi.org/10.1139/as-2023-0058">The Canadian
+Permafrost Electrical Resistivity Survey Database (CPERS): 15 years of
+permafrost resistivity data</a>. <em>Arctic Science.</em></p></li>
+<li><p>Griesbauer, H and <strong>AR Bevington</strong>. 2024. <a
+href="https://doi.org/10.1111/jbi.14778">Recent changes in forest
+structure and growth at the alpine-treeline ecotone in the Rocky and
+Columbia Mountains of central British Columbia, Canada</a>. <em>Journal
+of Biogeography.</em></p></li>
+<li><p><strong>Bevington, AR</strong> and B Menounos. 2022. <a
+href="https://doi.org/10.1016/j.rse.2021.112862">Accelerated change in
+the glaciated environments of western Canada revealed through trend
+analysis of optical satellite imagery</a>. <em>Remote Sensing of
+Environment.</em></p></li>
+<li><p>Mumma, MA, MP Gillingham, S Marshall, C Procter, <strong>AR
+Bevington</strong> and M Scheideman. 2021. <a
+href="https://doi.org/10.1016/j.foreco.2020.118763">Regional moose
+(Alces) responses to forestry cutblocks are driven by landscape-scale
+patterns of vegetation composition and regrowth</a>. <em>Forest Ecology
+and Management.</em></p></li>
+<li><p>Geertsema, M. and <strong>AR Bevington</strong>. 2020. <a
+href="https://doi.org/10.1139/cgj-2019-0751">A cautionary note for rock
+avalanche field investigation-recent sequential and overlapping
+landslides in British Columbia</a>. <em>Canadian Geotechnical
+Journal.</em></p></li>
+<li><p>Gleason, HG, <strong>AR Bevington</strong> and VN Foord. 2020. <a
+href="https://doi.org/10.1080/07055900.2020.1845116">Classification of
+clustered snow off dates over British Columbia, Canada, from mean sea
+level pressure</a>. <em>Atmosphere-Ocean, 58, 333–350.</em></p></li>
+<li><p>Mumma, MA, MP Gillingham, S Marshall, C Procter, <strong>AR
+Bevington</strong> and M Scheideman. 2020. <a
+href="https://doi.org/10.1016/j.foreco.2020.118763">Regional moose
+(Alces alces) responses to forestry cutblocks are driven by
+landscape-scale patterns of vegetation composition and regrowth</a>.
+<em>Forest Ecology and Management, 481, 1–11.</em></p></li>
+<li><p>Ban, Y, P Zhang, A Nascetti, <strong>AR Bevington</strong> and MA
+Wulder. 2020. <a href="https://doi.org/10.1038/s41598-019-56967-x">Near
+real-time wildfire progression monitoring with Sentinel-1 SAR time
+series and deep learning</a>. <em>Scientific Reports, 10,
+1322.</em></p></li>
+<li><p>Barth, S, M Geertsema, <strong>AR Bevington</strong>, AL Bird, JJ
+Clague, T Millard, PT Bobrowsky, A Hasler and H Liu. 2020. <a
+href="https://doi.org/10.1007/s10346-019-01292-7">Landslide response to
+the 27 October 2012 earthquake (MW 7.8), southern Haida Gwaii, British
+Columbia, Canada</a>. <em>Landslides, 17, 517–526.</em></p></li>
+<li><p>Deijns, AAJ, <strong>AR Bevington</strong>, F van Zadelhoff, SM
+de Jong, M Geertsema and S McDougall. 2020. <a
+href="https://doi.org/10.1016/j.jag.2019.101943">Semi-automated
+detection of landslide timing using harmonic modelling of satellite
+imagery, Buckinghorse River, Canada</a>. <em>International Journal of
+Applied Earth Observation and Geoinformation, 84, 101943.</em></p></li>
+<li><p>Shugar, DH, A Burr, UK Haritashya, JS Kargel, CS Watson, MC
+Kennedy, <strong>AR Bevington</strong>, RA Betts, S Harrison and K
+Strattman. 2020. <a
+href="https://doi.org/10.1038/s41558-020-0855-4">Rapid worldwide growth
+of glacial lakes since 1990</a>. <em>Nature Climate Change, 10,
+939–945.</em></p></li>
+<li><p><strong>Bevington AR</strong>, HE Gleason and VN Foord. 2020. <a
+href="http://a100.gov.bc.ca/pub/eirs/viewDocumentDetail.do?fromStatic=true&amp;repository=BDP&amp;documentId=13100">Snow
+cover timing from satellite imagery: Opportunities for near-real-time
+mapping and seasonal forecasting</a>. <em>BC Technical Report 129.
+Government of British Columbia. Victoria, BC.Book Chapters</em></p></li>
+<li><p>Geertsema M and <strong>AR Bevington</strong>. 2019. <a
+href="https://doi.org/10.1139/cgj-2019-0751">A cautionary note for rock
+avalanche field investigation – recent sequential and overlapping
+landslides in British Columbia</a>. <em>Canadian Geotechnical
+Journal.</em></p></li>
+<li><p><strong>Bevington AR</strong>, H Gleason, V Foord, H Griesbauer
+and WC Floyd. 2019. <a
+href="https://doi.org/10.5194/tc-13-2693-2019">Regional influence of
+ocean–atmosphere teleconnections on the timing and duration of
+MODIS-derived snow cover in British Columbia, Canada</a>. <em>The
+Cryosphere, 13, 2693–2712.</em></p></li>
+<li><p>Brideau MA, DH Shugar, <strong>AR Bevington</strong>, M Willis
+and C Wong. 2019. <a
+href="https://doi.org/10.1007/s10346-019-01199-3">Evolution of the 2014
+Vulcan Creek landslide-dammed lake, Yukon, Canada, using field and
+remote survey techniques</a>. <em>Landslides, 16,
+1823–1840.</em></p></li>
+<li><p><strong>Bevington AR</strong>, H Gleason, X Giroux-Bougard and J
+de Jong. 2018. <a href="https://doi.org/10.22230/jwsm.2018v2n2a18">A
+review of free optical satellite imagery for watershed scale landscape
+analysis</a>. <em>Confluence: Journal of Watershed Science, 2,
+1–22.</em></p></li>
+<li><p>Tanski G, H Bergstedt, <strong>AR Bevington</strong>, et
+al. 2019. <a href="https://doi.org/10.1017/S0032247418000645">The
+Permafrost Young Researchers Network (PYRN) is getting older: The past,
+present, and future of our evolving community</a>. <em>Polar Record.
+1-4.</em></p></li>
+<li><p>Leverkus S, SD Fuhlendorf, M Geertsema, BD Allred, M Gregory,
+<strong>AR Bevington</strong>, DM Engle and JD Scasta. 2018. <a
+href="https://doi.org/10.26077/j5px-af63">Resource selection of
+free-ranging horses influenced by fire in northern Canada</a>.
+<em>Human–Wildlife Interactions 12, 85–101.</em></p></li>
+<li><p>Kargel JS, GJ Leonard ,DH Shugar, UK Haritashya, <strong>AR
+Bevington</strong>, et al. 2015. <a
+href="https://doi.org/10.1126/science.aac8353">Geomorphic and tectonic
+controls of geohazards induced by Nepal’s 2015Gorkha earthquake</a>.
+<em>Science, 351, 6269.</em></p></li>
+<li><p>Magnin F, M Krautblatter, P Deline, L Ravanel, E Malet and
+<strong>AR Bevington</strong>. 2015. <a
+href="https://doi.org/10.1002/2014JF003351">Determination of warm,
+sensitive permafrost areas in near‐vertical rockwalls and evaluation of
+distributed models by electrical resistivity tomography</a>. Journal of
+Geophysical Research Earth Surface, 120, 745–762.</p></li>
+<li><p><strong>Bevington AR</strong> and L Copland. 2014. <a
+href="https://doi.org/10.3189/2014JoG13J134">Characteristics of the last
+five surges of Lowell Glacier, Yukon, Canada, since 1948</a>.
+<em>Journal of Glaciology, 60, 219</em></p></li>
 </ol>
 </div>
-<div id="government-publications" class="section level2" number="1.2">
-<h2 number="1.2"><span class="header-section-number">1.2</span> Government publications</h2>
+<div id="book-chapters" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Book chapters</h1>
 <ol style="list-style-type: decimal">
-<li><a href="http://a100.gov.bc.ca/pub/eirs/viewDocumentDetail.do?fromStatic=true&amp;repository=BDP&amp;documentId=13100">Snow cover timing from satellite imagery: Opportunities for near-real-time mapping and seasonal forecasting</a><br />
-<strong>Bevington AR</strong>, HE Gleason and VN Foord. 2020.<br />
-BC Technical Report 129. Government of British Columbia. Victoria, BC.Book Chapters</li>
+<li>Menounos B, <strong>AR Bevington</strong> and Geertsema, M. 2017. <a
+href="https://doi.org/10.1007/978-3-319-12127-7_143-1">Glacier
+Environments</a>. <em>In: Encyclopedia of Engineering Geology. P.T.
+Bobrowsky and B. Marker (eds.).</em></li>
+<li><strong>Bevington AR</strong>, JJ Clague, T Millard, IJ Walker and M
+Geertsema. 2017. <a
+href="https://doi.org/10.1007/978-3-319-44595-3_21">The Diverse
+Landscapes of Haida Gwaii</a>. <em>In: Landscapes and Landforms of
+Western Canada. O. Slaymaker (ed.).</em></li>
+<li><strong>Bevington AR</strong>, MA Brideau and M Geertsema. 2016. <a
+href="https://doi.org/10.1007/978-3-319-12127-7_209-1">Mountain
+Environments</a>. <em>In: Encyclopedia of Engineering Geology. P.T.
+Bobrowsky and B. Marker (eds.).</em></li>
 </ol>
 </div>
-<div id="book-chapters" class="section level2" number="1.3">
-<h2 number="1.3"><span class="header-section-number">1.3</span> Book chapters</h2>
+<div id="refereed-conference-papers" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Refereed conference
+papers</h1>
 <ol style="list-style-type: decimal">
-<li><a href="https://doi.org/10.1007/978-3-319-12127-7_143-1">Glacier Environments</a><br />
-Menounos B, <strong>AR Bevington</strong> and Geertsema, M. 2017.<br />
-In: Encyclopedia of Engineering Geology. P.T. Bobrowsky and B. Marker (eds.).<br />
-</li>
-<li><a href="https://doi.org/10.1007/978-3-319-44595-3_21">The Diverse Landscapes of Haida Gwaii</a><br />
-<strong>Bevington AR</strong>, JJ Clague, T Millard, IJ Walker and M Geertsema. 2017.<br />
-In: Landscapes and Landforms of Western Canada. O. Slaymaker (ed.).</li>
-<li><a href="https://doi.org/10.1007/978-3-319-12127-7_209-1">Mountain Environments</a><br />
-<strong>Bevington AR</strong>, MA Brideau and M Geertsema. 2016.<br />
-In: Encyclopedia of Engineering Geology. P.T. Bobrowsky and B. Marker (eds.).</li>
+<li>Brideau MA, <strong>AR Bevington</strong>, AG Lewkowicz and D Stead.
+2015. <a
+href="https://www.researchgate.net/publication/281939062_Engineering_Geology_Electrical_Resistivity_Tomography_and_Displacement_Monitoring_of_the_Dawson_City_Landslide_Yukon">Engineering
+geology,electrical resistivity tomography and displacement monitoring of
+the DawsonCity Landslide, Yukon</a>. <em>Proceedings of GEOQuebec 2015
+Geotechnical Conference and 7th Canadian Permafrost Conference, Quebec
+City, Canada.</em></li>
+<li>Smith SL, AG Lewkowicz, M Ednie, M Duguay and <strong>AR
+Bevington</strong>. 2015. <a
+href="https://www.researchgate.net/publication/312623215_Characterization_of_Permafrost_Thermal_State_in_the_Southern_Yukon">Characterization
+ofpermafrost thermal state in the southern Yukon</a>. <em>Proceedings of
+GEOQuebec 2015 Geotechnical Conference and 7th Canadian Permafrost
+Conference, Quebec City, Canada.</em></li>
+<li><strong>Bevington AR</strong> and AG Lewkowicz. 2015. <a
+href="https://www.researchgate.net/publication/282649555_Assessment_of_a_land_cover_driven_TTOP_model_for_mountain_and_lowland_permafrost_using_field_data_southern_Yukon_and_northern_British_Columbia_Canada">Assessment
+of a landcover driven TTOP-model for mountain and lowland permafrost
+using field data, southern Yukon and northern British Columbia,
+Canada</a>. <em>Proceedings of GEOQuebec 2015 Geotechnical Conference
+and 7th Canadian Permafrost Conference, Quebec City, Canada.</em></li>
 </ol>
 </div>
-<div id="refereed-conference-papers" class="section level2" number="1.4">
-<h2 number="1.4"><span class="header-section-number">1.4</span> Refereed conference papers</h2>
+<div id="presentations" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Presentations</h1>
 <ol style="list-style-type: decimal">
-<li><a href="https://www.researchgate.net/publication/281939062_Engineering_Geology_Electrical_Resistivity_Tomography_and_Displacement_Monitoring_of_the_Dawson_City_Landslide_Yukon">Engineering geology,electrical resistivity tomography and displacement monitoring of the DawsonCity Landslide, Yukon</a><br />
-Brideau MA, <strong>AR Bevington</strong>, AG Lewkowicz and D Stead. 2015.<br />
-Proceedings of GEOQuebec 2015 Geotechnical Conference and 7th Canadian Permafrost Conference, Quebec City, Canada.</li>
-<li><a href="https://www.researchgate.net/publication/312623215_Characterization_of_Permafrost_Thermal_State_in_the_Southern_Yukon">Characterization ofpermafrost thermal state in the southern Yukon</a><br />
-Smith SL, AG Lewkowicz, M Ednie, M Duguay and <strong>AR Bevington</strong>. 2015.<br />
-Proceedings of GEOQuebec 2015 Geotechnical Conference and 7th Canadian Permafrost Conference, Quebec City, Canada.</li>
-<li><a href="https://www.researchgate.net/publication/282649555_Assessment_of_a_land_cover_driven_TTOP_model_for_mountain_and_lowland_permafrost_using_field_data_southern_Yukon_and_northern_British_Columbia_Canada">Assessment of a landcover driven TTOP-model for mountain and lowland permafrost using field data, southern Yukon and northern British Columbia, Canada</a><br />
-<strong>Bevington AR</strong> and AG Lewkowicz. 2015.<br />
-Proceedings of GEOQuebec 2015 Geotechnical Conference and 7th Canadian Permafrost Conference, Quebec City, Canada.</li>
+<li><p><strong>Bevington AR</strong>. 2019. Reproducible workflows in
+satellite remote sensing. BC Government Data Science Community of
+Practice Demo Day, Victoria, BC.</p></li>
+<li><p><strong>Bevington AR</strong>. 2019. The magic of remote sensing.
+Northern Silviculture Committee Winter Conference, Prince George,
+BC.</p></li>
+<li><p><strong>Bevington AR</strong>. 2018. When I fly, I always take
+the window seat. Oral Presentation, British Columbia Government
+“Research Talks”. url: <a href="https://youtu.be/WBWnnkhrCIA"
+class="uri">https://youtu.be/WBWnnkhrCIA</a>.</p></li>
+<li><p><strong>Bevington AR</strong>. 2018. Using satellite remote
+sensing for the quantification of surface water storage changes caused
+by the oil and gas sector in Northeastern British Columbia. Oral
+Presentation, British Columbia Government Hydraulic Fracturing
+Independent Review Panel.</p></li>
+<li><p><strong>Bevington AR</strong>. 2017. The democratization of
+satellite remote sensing: Implications for science in British Columbia.
+Oral Presentation, NRESi Colloquium, University of Northern British
+Columbia, Prince George, British Columbia. url: <a
+href="http://tinyurl.com/y3az54ct"
+class="uri">http://tinyurl.com/y3az54ct</a>.</p></li>
+<li><p><strong>Bevington AR</strong>. 2017. The democratization of
+satellite remote sensing: Implications for the people of British
+Columbia. Oral Presentation, Science Week, Prince George Public Library,
+British Columbia.</p></li>
+<li><p><strong>Bevington AR</strong>. 2017. A tour of the mountain
+cryosphere of British Columbia. Oral Presentation, Remote Sensing
+Research Seminar, University of Oslo, Norway.</p></li>
+<li><p><strong>Bevington AR</strong> and B Menounos. 2017. Glacier area
+change in British Columbia over 31 years of satellite imagery using
+Google Earth Engine. Poster Presentation, European Space Agency 7th
+Advanced Land Remote Sensing Workshop, Gödöllö, Hungary.</p></li>
+<li><p><strong>Bevington AR</strong> and B Menounos. 2017. Glacier area
+change in British Columbia over 31 years of satellite imagery. Oral
+Presentation, Canadian Geophysical Union, Vancouver, Canada.</p></li>
+<li><p><strong>Bevington AR</strong> and M Geertsema. 2016. Landslide
+response to the October 27, 2012 earthquake (Mw 7.7), Gwaii Haanas
+National Park Reserve and Haida Heritage Site, Haida Gwaii, BC. Oral
+Presentation. Whitehorse 2016 GAC-MAC Annual Meeting, Whitehorse,
+Canada.</p></li>
+<li><p><strong>Bevington AR</strong> and M Geertsema. 2016. Using remote
+sensing product to detect geohazards in the mountainous regions of
+northern British Columbia. Oral Presentation. Whitehorse 2016 GAC-MAC
+Annual Meeting, Whitehorse, Canada</p></li>
+<li><p><strong>Bevington AR</strong>. 2016. Professional development
+workshop: Remote sensing for natural resource practitioners. Oral
+Presentation, British Columbia Institute of Agrologists (BCIA) Annual
+General Meeting 2016, Prince George, Canada.</p></li>
+<li><p><strong>Bevington AR</strong>. 2016. Satellite remote sensing for
+the natural sciences. Webinar Presentation, Provincial Hydro/Geo
+Technical Working Group, Prince George, British Columbia.</p></li>
+<li><p><strong>Bevington AR</strong>, M van Der Kooij, M Geertsema, C
+Huggel. 2015. Detection and analysis of landslides following the April
+25, 2015 Mw 7.8 Gorkha earthquake, Nepal using Radarsat-2 SAR data. Oral
+Presentation, Canadian Space Agency ASAR Workshop, Montreal,
+Quebec.</p></li>
 </ol>
-</div>
-<div id="presentations" class="section level2" number="1.5">
-<h2 number="1.5"><span class="header-section-number">1.5</span> Presentations</h2>
-<ol style="list-style-type: decimal">
-<li><p><strong>Bevington AR</strong>. 2019. Reproducible workflows in satellite remote sensing. BC Government Data Science Community of Practice Demo Day, Victoria, BC.</p></li>
-<li><p><strong>Bevington AR</strong>. 2019. The magic of remote sensing. Northern Silviculture Committee Winter Conference, Prince George, BC.</p></li>
-<li><p><strong>Bevington AR</strong>. 2018. When I fly, I always take the window seat. Oral Presentation, British Columbia Government “Research Talks”. url: <a href="https://youtu.be/WBWnnkhrCIA" class="uri">https://youtu.be/WBWnnkhrCIA</a>.</p></li>
-<li><p><strong>Bevington AR</strong>. 2018. Using satellite remote sensing for the quantification of surface water storage changes caused by the oil and gas sector in Northeastern British Columbia. Oral Presentation, British Columbia Government Hydraulic Fracturing Independent Review Panel.</p></li>
-<li><p><strong>Bevington AR</strong>. 2017. The democratization of satellite remote sensing: Implications for science in British Columbia. Oral Presentation, NRESi Colloquium, University of Northern British Columbia, Prince George, British Columbia. url: <a href="http://tinyurl.com/y3az54ct" class="uri">http://tinyurl.com/y3az54ct</a>.</p></li>
-<li><p><strong>Bevington AR</strong>. 2017. The democratization of satellite remote sensing: Implications for the people of British Columbia. Oral Presentation, Science Week, Prince George Public Library, British Columbia.</p></li>
-<li><p><strong>Bevington AR</strong>. 2017. A tour of the mountain cryosphere of British Columbia. Oral Presentation, Remote Sensing Research Seminar, University of Oslo, Norway.</p></li>
-<li><p><strong>Bevington AR</strong> and B Menounos. 2017. Glacier area change in British Columbia over 31 years of satellite imagery using Google Earth Engine. Poster Presentation, European Space Agency 7th Advanced Land Remote Sensing Workshop, Gödöllö, Hungary.</p></li>
-<li><p><strong>Bevington AR</strong> and B Menounos. 2017. Glacier area change in British Columbia over 31 years of satellite imagery. Oral Presentation, Canadian Geophysical Union, Vancouver, Canada.</p></li>
-<li><p><strong>Bevington AR</strong> and M Geertsema. 2016. Landslide response to the October 27, 2012 earthquake (Mw 7.7), Gwaii Haanas National Park Reserve and Haida Heritage Site, Haida Gwaii, BC. Oral Presentation. Whitehorse 2016 GAC-MAC Annual Meeting, Whitehorse, Canada.</p></li>
-<li><p><strong>Bevington AR</strong> and M Geertsema. 2016. Using remote sensing product to detect geohazards in the mountainous regions of northern British Columbia. Oral Presentation. Whitehorse 2016 GAC-MAC Annual Meeting, Whitehorse, Canada</p></li>
-<li><p><strong>Bevington AR</strong>. 2016. Professional development workshop: Remote sensing for natural resource practitioners. Oral Presentation, British Columbia Institute of Agrologists (BCIA) Annual General Meeting 2016, Prince George, Canada.</p></li>
-<li><p><strong>Bevington AR</strong>. 2016. Satellite remote sensing for the natural sciences. Webinar Presentation, Provincial Hydro/Geo Technical Working Group, Prince George, British Columbia.</p></li>
-<li><p><strong>Bevington AR</strong>, M van Der Kooij, M Geertsema, C Huggel. 2015. Detection and analysis of landslides following the April 25, 2015 Mw 7.8 Gorkha earthquake, Nepal using Radarsat-2 SAR data. Oral Presentation, Canadian Space Agency ASAR Workshop, Montreal, Quebec.</p></li>
-</ol>
-<!-- # Awards -->
-<!-- 1.  British Columbia Institute of Agrology, New Growth Award, 2020 -->
-<!-- 2.  NSERC Canada Graduate Scholarship -- Doctoral (CGS-D), 2018-2020 -->
-<!-- 3.  University of Northern British Columbia Graduate Travel Award, 2017 -->
-<!-- 4.  University of Northern British Columbia Doctoral Tuition Fee Waiver, 2016-2020 -->
-<!-- 5.  GLACIO-EX: Norwegian Cryospheric Exchange Scholarship, University of Oslo, 2014 -->
-<!-- 6.  National Geographic Young Explorer Grant, 2013 -->
-<!-- 7.  W. Garfield Weston Award for Northern Research (Master's) / Association of Canadian Universities for Northern Studies, 2013 -->
-<!-- 8.  Northern Scientific Training Program from Aboriginal Affairs and Northern Development Canada, 2011-2013 -->
-<!-- 9.  Research Fellowship, Northern Research Endowment Fund, Yukon Research Centre, Yukon College, 2013 -->
-<!-- 10. High North Fellowship Program, Norwegian Government, 2013 -->
-<!-- 11. Graduate Student Admission Scholarship, M.Sc. in Physical Geography, 2012-2014 -->
-<!-- 12. NSERC CREATE Training Program Undergraduate Poster Award, 2012 -->
-<!-- 13. NSERC USRA National Science and Engineering Research Council Undergraduate Student Research Award, 2011 -->
-<!-- 14. CRYO-EX: Norwegian Cryospheric Exchange Scholarship, University of Oslo, 2010 -->
-<!-- # Volunteering -->
-<!-- 1.  **President**, [Prince George Backcountry Recreation Society](www.pgbrs.org), 2020-Present -->
-<!-- 2.  **Conference Organizer**, Canadian Cartographic Association, 2019 -->
-<!-- 3.  **Young National Correspondent**,GTN-P Canada, 2015-18 -->
-<!-- 4.  **Mountain permafrost workshop coordinator**, Carleton University, 2014 -->
-<!-- 5.  **Vice-President**, Permafrost Young Researcher Network, 2014-16 -->
-<!-- 6.  **Volunteer Reviewer**, 4th European Conference on Permafrost (EUCOP4), 2014 -->
-<!-- 7.  **Ski Patroller**, Canadian Ski Patrol, Yukon, 2013-14 -->
-<!-- 8.  **Board Member**, Association of Polar Early Career Scientists (APECS) Canada, 2013-15 -->
-<!-- 9.  **GIS Analyst**, Mining Watch Canada, 2013 -->
-<!-- 10. **GIS Analyst**, GIS Corps, 2012-13 -->
-<!-- 11. **Vice President Social**, Geography Graduate Student Association, University of Ottawa, 2012-13 -->
-<!-- 12. **Lead Organizer**, University of Ottawa GIS Day 2012, 2012 -->
-<!-- 13. **Youth Outreach**, NSERC Let's Talk Science, 2012-13 -->
-<!-- 14. **Scientific Abstract Review Board Member**, ACUNS Student Conference, 2012 -->
-<!-- 15. **Member of the Executive Council**, Association of Polar Early Career Scientists (APECS), 2011-12 -->
-<!-- 16. **Student Senator**, Faculty of Science, University of Ottawa, 2009-10 -->
-<!-- 17. **President**, Undergraduate Geography Student Association, University of Ottawa, 2007-09 -->
-</div>
 </div>
 
 
@@ -577,6 +677,9 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
 
     // move toc-ignore selectors from section div to header
     $('div.section.toc-ignore')

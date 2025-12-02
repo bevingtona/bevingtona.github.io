@@ -11,10 +11,10 @@
 
 
 
-<title>Alexandre R. Bevington</title>
+<title>GeoWS</title>
 
-<script src="site_libs/header-attrs-2.8/header-attrs.js"></script>
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.30/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -32,6 +32,8 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -52,6 +54,7 @@ if (window.hljs) {
   }
 }
 </script>
+
 
 
 
@@ -81,6 +84,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -138,11 +144,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -171,8 +181,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -180,16 +190,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -233,70 +236,79 @@ $(document).ready(function () {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">Alexandre R. Bevington</a>
+      <a class="navbar-brand" href="index.html">Geospatial Watershed Lab</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Research
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="cv.html">CV</a>
+      <a href="index.html">Lab</a>
     </li>
     <li>
-      <a href="pubs.html">Publications and Presentations</a>
-    </li>
-    <li>
-      <a href="research.html">Current projects</a>
+      <a href="pubs.html">Publications</a>
     </li>
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Code and stuff
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Teaching
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="20210329_stars.html">Using the `stars` package</a>
-    </li>
-    <li>
-      <a href="20210504_rgee_rayshade_gifski.html">3D timelapse from Landsat</a>
-    </li>
-    <li>
-      <a href="20210507_PlanetR_Timelapse.html">Download and animate Planet imagery</a>
-    </li>
-    <li>
-      <a href="20210512_FWA_River_Profiles.html">River profile tool for British Columbia</a>
-    </li>
-    <li>
-      <a href="20210702_getspatialdata_sentinel3.html">Sentinel-3 Land Surface Temperature</a>
+      <a href="courses.html">Courses, Workshops and Events</a>
     </li>
   </ul>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://www.researchgate.net/profile/Alexandre-Bevington">RG</a>
+  <a href="mailto:alex.bevington@unbc.ca">
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="https://github.com/bevingtona">GitHub</a>
+  <a href="https://scholar.google.com/citations?user=5SVDaREAAAAJ&amp;hl=en">
+    <span class="ai ai-google-scholar ai-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="https://twitter.com/abevingtona">Twitter</a>
+  <a href="https://www.researchgate.net/profile/Alexandre-Bevington">
+    <span class="ai ai-researchgate ai-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="https://www.linkedin.com/in/bevingtona/">Linked-In</a>
+  <a href="https://github.com/bevingtona">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://twitter.com/abevingtona">
+    <span class="fa fa-twitter fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://www.linkedin.com/in/bevingtona/">
+    <span class="fa fa-linkedin fa-lg"></span>
+     
+  </a>
 </li>
       </ul>
     </div><!--/.nav-collapse -->
@@ -311,9 +323,88 @@ $(document).ready(function () {
 </div>
 
 
-<p><link rel="stylesheet" href="styles.css" type="text/css"> <link rel="stylesheet" href="academicicons/css/academicons.min.css"/></p>
+<p><link rel="stylesheet" href="../styles.css" type="text/css">
+<link rel="stylesheet" href="../academicicons/css/academicons.min.css"/></p>
 <p><img src="images/2019-02-12_0029_circle.jpg" /></p>
-<p>This website serves as a general purpose CV and is somewhere that I can share progress and thoughts on Earth Observation (EO), Hydrology (Hydro), Cryosphere (Cryo) and Geoscience (Geo).</p>
+<p>Hello! My name is Alex. I am a tenure-track lecturer at the <a
+href="https://www.unbc.ca/department-geography-earth-and-environmental-sciences">University
+of Northern British Columbia</a>. My interests are wide-ranging, but are
+generally captured by the following themes: Hydrology, Cryosphere,
+Geography, and Earth Observation. Link them all together to make
+<em>HYDRO-CRYO-GEO-EO!</em></p>
+<p>I’m part of the “<u><strong>Geospatial Watershed Lab</strong></u>”.
+The motivation of the lab is to tackle wicked problems in the world of
+water security and public safety, and contribute to solutions with
+science and research.</p>
+<div id="current-projects-and-themes" class="section level2">
+<h2>Current Projects and Themes</h2>
+<p><strong><em>RemoteLogger</em></strong> – <em>Low-cost real-time data
+loggers</em><br />
+<a href="https://bcgov-env.shinyapps.io/nbchydro/"
+class="uri">https://bcgov-env.shinyapps.io/nbchydro/</a><br />
+We are developing modular, low-cost, and low-power loggers for
+hydrological and environmental monitoring. These systems integrate
+in-situ sensors (e.g., water level, snow depth, water temperature) with
+real-time communication capabilities, offering scalable monitoring
+solutions for remote and underserved areas. RemoteLogger is designed to
+democratize access to environmental data by reducing costs while
+maintaining scientific-grade reliability.</p>
+<p><strong><em>watershedBC</em></strong> – <em>Interactive watershed
+information platform</em><br />
+<a href="https://bcgov-env.shinyapps.io/watershedBC/"
+class="uri">https://bcgov-env.shinyapps.io/watershedBC/</a><br />
+WatershedBC is an open-access decision-support tool that enables users
+to quickly visualize and extract key information about watersheds across
+British Columbia. Designed for practitioners, researchers, and the
+public, it leverages provincial datasets and automated workflows to
+deliver insights on hydrology, land cover, and climate attributes at
+nested watershed scales.</p>
+<p><strong><em>Climate and Land Cover Change Impacts on
+Watersheds</em></strong> - This project addresses how changing climate
+regimes and land cover transformations (wildfire, forestry,
+urbanization) influence watershed processes. We are building
+large-scale, time-dynamic datasets to link hydrological responses—such
+as flooding, drought, erosion, sediment loading, and stream
+temperature—to environmental drivers. The project integrates remote
+sensing from multiple platforms (Landsat, Sentinel, PlanetScope, LiDAR)
+with watershed models to better forecast future water resource
+challenges in western Canada.</p>
+<p><strong><em>Rapidly Changing Cryosphere</em></strong> - The
+cryosphere—including glaciers, snow, and permafrost—is one of the most
+visible indicators of climate change in western Canada. We combine
+in-situ measurements (mass balance, snow depth, borehole permafrost
+temperatures) with satellite observations and conceptual models to
+monitor change and explore its consequences for water resources,
+ecosystems, and communities. This work provides critical data for water
+supply planning, hazard assessments, and long-term climate adaptation
+strategies.</p>
+<p><strong><em>Slope Stability Monitoring in BC with InSAR</em></strong>
+- Landslide hazards represent a significant risk to infrastructure and
+communities, particularly in mountainous terrain. This project focuses
+on building robust InSAR workflows using Sentinel-1, RADARSAT
+Constellation Mission, and future missions (e.g., NASA–ISRO NISAR) to
+detect and track precursory slope deformation. Our objective is to
+transition InSAR from a research tool into an operational,
+near-real-time monitoring system that can support emergency management
+and land-use planning.</p>
+<p><strong><em>Water Temperature Dynamics in Freshwater
+Systems</em></strong> - Water temperature regulates ecological processes
+and habitat viability for fish and other aquatic life. We are
+integrating field-based temperature monitoring networks with thermal
+infrared remote sensing and hydrological models to better understand the
+spatial and temporal dynamics of stream and lake temperatures. These
+datasets will help predict thermal stress on ecosystems under climate
+change and guide management strategies for cold-water refugia.</p>
+<p><strong><em>Integrated Remote Sensing Analysis</em></strong> - Our
+lab takes on a broad portfolio of remote sensing projects, reflecting
+the versatility of geospatial technologies. Current and past work
+includes: Time-series analysis of vegetation and disturbance dynamics;
+Development of novel cloud-free mosaic generation approaches;
+Multisensor fusion for forest attribute mapping; and Detection and
+attribution of human impacts on landscapes over time. This theme
+highlights classification, change detection, and statistical modeling of
+environmental processes using Earth observation data.</p>
+</div>
 
 
 
