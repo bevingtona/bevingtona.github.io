@@ -12,6 +12,7 @@ output:
 
 <link rel="stylesheet" href="../styles.css" type="text/css">
 
+
 <link rel="stylesheet" href="../academicicons/css/academicons.min.css"/>
 
 Last updated `r lubridate::today()`
@@ -72,6 +73,11 @@ Last updated `r lubridate::today()`
 
 # Refereed conference papers
 
+1.  Brideau MA, **AR Bevington**, AG Lewkowicz and D Stead. 2015. [Engineering geology,electrical resistivity tomography and displacement monitoring of the DawsonCity Landslide, Yukon](https://www.researchgate.net/publication/281939062_Engineering_Geology_Electrical_Resistivity_Tomography_and_Displacement_Monitoring_of_the_Dawson_City_Landslide_Yukon). *Proceedings of GEOQuebec 2015 Geotechnical Conference and 7th Canadian Permafrost Conference, Quebec City, Canada.*
+2.  Smith SL, AG Lewkowicz, M Ednie, M Duguay and **AR Bevington**. 2015. [Characterization ofpermafrost thermal state in the southern Yukon](https://www.researchgate.net/publication/312623215_Characterization_of_Permafrost_Thermal_State_in_the_Southern_Yukon). *Proceedings of GEOQuebec 2015 Geotechnical Conference and 7th Canadian Permafrost Conference, Quebec City, Canada.*
+3.  **Bevington AR** and AG Lewkowicz. 2015. [Assessment of a landcover driven TTOP-model for mountain and lowland permafrost using field data, southern Yukon and northern British Columbia, Canada](https://www.researchgate.net/publication/282649555_Assessment_of_a_land_cover_driven_TTOP_model_for_mountain_and_lowland_permafrost_using_field_data_southern_Yukon_and_northern_British_Columbia_Canada). *Proceedings of GEOQuebec 2015 Geotechnical Conference and 7th Canadian Permafrost Conference, Quebec City, Canada.*
+
+# Presentations
 1.  Brideau MA, **AR Bevington**, AG Lewkowicz and D Stead. 2015. [Engineering geology,electrical resistivity tomography and displacement monitoring of the DawsonCity Landslide, Yukon](https://www.researchgate.net/publication/281939062_Engineering_Geology_Electrical_Resistivity_Tomography_and_Displacement_Monitoring_of_the_Dawson_City_Landslide_Yukon). *Proceedings of GEOQuebec 2015 Geotechnical Conference and 7th Canadian Permafrost Conference, Quebec City, Canada.*
 2.  Smith SL, AG Lewkowicz, M Ednie, M Duguay and **AR Bevington**. 2015. [Characterization ofpermafrost thermal state in the southern Yukon](https://www.researchgate.net/publication/312623215_Characterization_of_Permafrost_Thermal_State_in_the_Southern_Yukon). *Proceedings of GEOQuebec 2015 Geotechnical Conference and 7th Canadian Permafrost Conference, Quebec City, Canada.*
 3.  **Bevington AR** and AG Lewkowicz. 2015. [Assessment of a landcover driven TTOP-model for mountain and lowland permafrost using field data, southern Yukon and northern British Columbia, Canada](https://www.researchgate.net/publication/282649555_Assessment_of_a_land_cover_driven_TTOP_model_for_mountain_and_lowland_permafrost_using_field_data_southern_Yukon_and_northern_British_Columbia_Canada). *Proceedings of GEOQuebec 2015 Geotechnical Conference and 7th Canadian Permafrost Conference, Quebec City, Canada.*

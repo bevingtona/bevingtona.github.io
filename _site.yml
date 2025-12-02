@@ -8,6 +8,9 @@ navbar:
       - text: "Lab"
         href: index.html
       - text: "Publications"
+      - text: "Lab"
+        href: index.html
+      - text: "Publications"
         href: pubs.html
     - text: "Teaching"
       menu: 
@@ -36,15 +39,25 @@ navbar:
     - icon: ai-google-scholar ai-lg
       href: https://scholar.google.com/citations?user=5SVDaREAAAAJ&hl=en
     - icon: ai-researchgate ai-lg
+    - icon: fa-envelope fa-lg
+      href: mailto:alex.bevington@unbc.ca
+    - icon: ai-google-scholar ai-lg
+      href: https://scholar.google.com/citations?user=5SVDaREAAAAJ&hl=en
+    - icon: ai-researchgate ai-lg
       href: https://www.researchgate.net/profile/Alexandre-Bevington
+    - icon: fa-github fa-lg
     - icon: fa-github fa-lg
       href: https://github.com/bevingtona
     - icon: fa-twitter fa-lg
+    - icon: fa-twitter fa-lg
       href: https://twitter.com/abevingtona
     - icon: fa-linkedin fa-lg
+    - icon: fa-linkedin fa-lg
       href: https://www.linkedin.com/in/bevingtona/
+
 
 output:
   html_document:
     theme: paper
+    css: styles.css
     css: styles.css

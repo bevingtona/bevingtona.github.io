@@ -30,6 +30,7 @@
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
 <script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
@@ -63,6 +64,7 @@ if (window.hljs) {
 
 
 
+
 <link rel="stylesheet" href="styles.css" type="text/css" />
 
 
@@ -87,6 +89,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 details > summary > p:only-child {
   display: inline;
@@ -156,6 +161,15 @@ $(document).ready(function () {
     menuAnchor.parent().addClass('active');
     dropdown.addClass('active');
   }
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -186,6 +200,8 @@ $(document).ready(function () {
 
 .tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
   content: "\e259";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -193,6 +209,8 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
   content: "\e258";
   font-family: 'Glyphicons Halflings';
   border: none;
@@ -319,6 +337,7 @@ div.tocify {
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -329,6 +348,7 @@ div.tocify {
       <ul class="nav navbar-nav">
         <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Research
      
     <span class="caret"></span>
@@ -336,13 +356,17 @@ div.tocify {
   <ul class="dropdown-menu" role="menu">
     <li>
       <a href="index.html">Lab</a>
+      <a href="index.html">Lab</a>
     </li>
     <li>
+      <a href="pubs.html">Publications</a>
       <a href="pubs.html">Publications</a>
     </li>
   </ul>
 </li>
 <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Teaching
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Teaching
      
@@ -373,8 +397,28 @@ div.tocify {
     <span class="ai ai-researchgate ai-lg"></span>
      
   </a>
+  <a href="mailto:alex.bevington@unbc.ca">
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
 </li>
 <li>
+  <a href="https://scholar.google.com/citations?user=5SVDaREAAAAJ&amp;hl=en">
+    <span class="ai ai-google-scholar ai-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://www.researchgate.net/profile/Alexandre-Bevington">
+    <span class="ai ai-researchgate ai-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://github.com/bevingtona">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
   <a href="https://github.com/bevingtona">
     <span class="fa fa-github fa-lg"></span>
      
@@ -385,8 +429,16 @@ div.tocify {
     <span class="fa fa-twitter fa-lg"></span>
      
   </a>
+  <a href="https://twitter.com/abevingtona">
+    <span class="fa fa-twitter fa-lg"></span>
+     
+  </a>
 </li>
 <li>
+  <a href="https://www.linkedin.com/in/bevingtona/">
+    <span class="fa fa-linkedin fa-lg"></span>
+     
+  </a>
   <a href="https://www.linkedin.com/in/bevingtona/">
     <span class="fa fa-linkedin fa-lg"></span>
      
@@ -401,6 +453,7 @@ div.tocify {
 
 
 
+<h1 class="title toc-ignore">Publications</h1>
 <h1 class="title toc-ignore">Publications</h1>
 
 </div>
@@ -677,6 +730,9 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
 
     // temporarily add toc-ignore selector to headers for the consistency with Pandoc
     $('.unlisted.unnumbered').addClass('toc-ignore')
