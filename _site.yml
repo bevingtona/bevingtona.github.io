@@ -8,9 +8,6 @@ navbar:
       - text: "Lab"
         href: index.html
       - text: "Publications"
-      - text: "Lab"
-        href: index.html
-      - text: "Publications"
         href: pubs.html
     - text: "Teaching"
       menu: 
@@ -34,11 +31,6 @@ navbar:
       #   href: resources.html
         
   right:
-    - icon: fa-envelope fa-lg
-      href: mailto:alex.bevington@unbc.ca
-    - icon: ai-google-scholar ai-lg
-      href: https://scholar.google.com/citations?user=5SVDaREAAAAJ&hl=en
-    - icon: ai-researchgate ai-lg
     - icon: fa-envelope fa-lg
       href: mailto:alex.bevington@unbc.ca
     - icon: ai-google-scholar ai-lg
